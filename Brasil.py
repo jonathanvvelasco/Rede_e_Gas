@@ -13,7 +13,7 @@ scenario = message_ix.Scenario(
     mp, model="Brazil Electrified", scenario="baseline", version="new"
 )
 
-history = [2000]
+history = [2008]
 model_horizon = [2013, 2018, 2023]
 scenario.add_horizon(year=history + model_horizon, firstmodelyear=model_horizon[0])
 
@@ -22,14 +22,15 @@ scenario.add_spatial_sets({"country": country})
 
 scenario.add_set("commodity", ["electricity", "light"])
 scenario.add_set("level", ["secondary", "final", "useful"])
-scenario.add_set("technology", ["national_coal_ppl", "imported_coal_ppl","large_hydroelectric_ppl", "medium_hydroelectric_ppl","grid", "bulb"])
+scenario.add_set("technology", ["oil_ppl", "pch_ppl","nuclear_g_ppl", "biogas_ppl", "solar_fotovoltaic_ppl", "solar_csp_ppl","onshore_wind_ppl", "offshore_wind_ppl","biomass_retrofit_ppl", "biomass_greenfield_ppl","GN_open_cycle_ppl", "GN_combined_cycle_ppl","national_coal_ppl", "imported_coal_ppl","large_hydroelectric_ppl", "medium_hydroelectric_ppl","grid", "bulb"])
 scenario.add_set("mode", "standard")
 
-gdp_profile = pd.Series([0.71, 1.59, 3.71], index=pd.Index(model_horizon, name="Time"))
-gdp_profile.plot(title="GDP Growth")
-savefig("1.png", dpi=500)
 
-demand_per_year = 67 * 12 * 7059 / 8760
+
+
+demanda = pd.Series([77883, 100861, 119496], index=pd.Index(model_horizon, name="Time"))
+
+
 light_demand = pd.DataFrame(
     {
         "node": country,
@@ -37,7 +38,7 @@ light_demand = pd.DataFrame(
         "level": "useful",
         "year": model_horizon,
         "time": "year",
-        "value": (demand_per_year * gdp_profile).round(),
+        "value": (demanda).round(),
         "unit": "GWa",
     }
 )
@@ -87,6 +88,114 @@ grid_in = base_input.assign(
 )
 scenario.add_par("input", grid_in)
 
+oil_out = base_output.assign(
+    technology="oil_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", oil_out)
+
+pch_out = base_output.assign(
+    technology="pch_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", pch_out)
+
+nuclear_g_out = base_output.assign(
+    technology="nuclear_g_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", nuclear_g_out)
+
+biogas_out = base_output.assign(
+    technology="biogas_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", biogas_out)
+
+solar_fotovoltaic_out = base_output.assign(
+    technology="solar_fotovoltaic_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", solar_fotovoltaic_out)
+
+solar_csp_out = base_output.assign(
+    technology="solar_csp_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", solar_csp_out)
+
+onshore_wind_out = base_output.assign(
+    technology="onshore_wind_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", onshore_wind_out)
+
+offshore_wind_out = base_output.assign(
+    technology="offshore_wind_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", offshore_wind_out)
+
+biomass_retrofit_out = base_output.assign(
+    technology="biomass_retrofit_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", biomass_retrofit_out)
+
+biomass_greenfield_out = base_output.assign(
+    technology="biomass_greenfield_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", biomass_greenfield_out)
+
+GN_open_cycle_out = base_output.assign(
+    technology="GN_open_cycle_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", GN_open_cycle_out)
+
+GN_combined_cycle_out = base_output.assign(
+    technology="GN_combined_cycle_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", GN_combined_cycle_out)
+
 
 large_hydroelectric_out = base_output.assign(
     technology="large_hydroelectric_ppl",
@@ -127,6 +236,18 @@ scenario.add_par("output", imported_coal_out)
 
 
 capacity_factor = {
+    "oil_ppl": 0.2,
+    "pch_ppl": 0.5,
+    "nuclear_g_ppl":0.85,
+    "biogas_ppl":0.5,
+    "solar_fotovoltaic_ppl":0.4,
+    "solar_csp_ppl":0.2,
+    "onshore_wind_ppl":0.3,
+    "offshore_wind_ppl":0.3,
+    "biomass_retrofit_ppl":0.67,
+    "biomass_greenfield_ppl":0.67,
+    "GN_open_cycle_ppl":0.4,
+    "GN_combined_cycle_ppl":0.6,
     "national_coal_ppl":0.4,
     "imported_coal_ppl":0.5,
     "large_hydroelectric_ppl":0.5,
@@ -148,6 +269,18 @@ for tec, val in capacity_factor.items():
     scenario.add_par("capacity_factor", df)
 
     lifetime = {
+    "oil_ppl": 20,
+    "pch_ppl": 20,
+    "nuclear_g_ppl":20,
+    "biogas_ppl":20,
+    "solar_fotovoltaic_ppl":20,
+    "solar_csp_ppl":20,
+    "onshore_wind_ppl":20,
+    "offshore_wind_ppl":20,
+    "biomass_retrofit_ppl":40,
+    "biomass_greenfield_ppl":20,
+    "GN_open_cycle_ppl":20,
+    "GN_combined_cycle_ppl":20,
     "national_coal_ppl":35,
     "imported_coal_ppl":35,
     "large_hydroelectric_ppl":50,
@@ -168,6 +301,17 @@ for tec, val in lifetime.items():
 
 
 growth_technologies = [
+    "pch_ppl",
+    "nuclear_g_ppl",
+    "biogas_ppl",
+    "solar_fotovoltaic_ppl",
+    "solar_csp_ppl",
+    "onshore_wind_ppl",
+    "offshore_wind_ppl",
+    "biomass_retrofit_ppl",
+    "biomass_greenfield_ppl",
+    "GN_open_cycle_ppl",
+    "GN_combined_cycle_ppl",
     "national_coal_ppl",
     "imported_coal_ppl",
     "large_hydroelectric_ppl",
@@ -187,16 +331,28 @@ for tec in growth_technologies:
     scenario.add_par("growth_activity_up", df)
 
 
-historic_demand =  0.7* demand_per_year
+historic_demand =  60194
 historic_generation = historic_demand / grid_efficiency
-medium_hydroelectric_fraction = 0.1
-large_hydroelectric_fraction  = 0.2
+large_hydroelectric_fraction = 0.73532
+pch_fraction = 0.04153
+national_coal_fraction = 0.01339
+gn_fraction = 0.07709
+biomass_fraction = 0.05899
+wind_fraction = 0.03887
+nuclear_fraction  = 0.02834
+oil_fraction = 0.00645
 
 
 
 old_activity = {
-    "medium_hydroelectric_ppl":medium_hydroelectric_fraction * historic_generation,
-    "large_hydroelectric_ppl":large_hydroelectric_fraction * historic_generation,
+    "large_hydroelectric_ppl":(large_hydroelectric_fraction) * historic_generation,
+    "oil_ppl": oil_fraction * historic_generation,
+    "nuclear_g_ppl": nuclear_fraction*historic_generation,
+    "national_coal_ppl": national_coal_fraction* historic_generation,
+    "biomass_retrofit_ppl": biomass_fraction * historic_generation,
+    "onshore_wind_ppl": wind_fraction* historic_generation,
+    "GN_open_cycle_ppl": gn_fraction * historic_generation,
+    "pch_ppl": pch_fraction * historic_generation,
 
 }
 nomes_energias = []
@@ -214,6 +370,25 @@ plt.legend(nomes_energias, loc='upper right', bbox_to_anchor=(1.68,0.85))
 plt.gcf().set_size_inches(10, 5)
 plt.savefig('6.png', dpi=200)
 plt.figure().clear()
+
+
+capacity = {"biomass_retrofit_ppl": 20,
+       }
+
+base_capacity = {
+    'node_loc': country,
+    'year_vtg': [2013, 2018, 2023],
+    'unit': 'GW',
+}
+
+##cf = pd.Series(capacity_factor)
+##act = pd.Series(activity)
+#capacity = (act / 8760 / cf).dropna().to_dict()
+
+for tec, val in capacity.items():
+    df = make_df(base_capacity, technology=tec, value=val)
+    scenario.add_par('bound_new_capacity_up', df)
+
 
 for tec, val in old_activity.items():
     df = make_df(
@@ -248,6 +423,18 @@ scenario.add_par("interestrate", model_horizon, value=0.05, unit="-")
 mp.add_unit("USD/kW")
 
 costs = {
+    "oil_ppl": 10000,
+    "pch_ppl": 2600,
+    "nuclear_g_ppl":3500,
+    "biogas_ppl":2400,
+    "solar_fotovoltaic_ppl":5900,
+    "solar_csp_ppl":4800,
+    "onshore_wind_ppl":2500,
+    "offshore_wind_ppl":3500,
+    "biomass_retrofit_ppl":1500,
+    "biomass_greenfield_ppl":1900,
+    "GN_open_cycle_ppl":850,
+    "GN_combined_cycle_ppl":1200,
     "national_coal_ppl":2100,
     "imported_coal_ppl":2100,
     "large_hydroelectric_ppl":1800,
@@ -280,6 +467,18 @@ for tec, val in costs.items():
     scenario.add_par("inv_cost", df)
 
 costs = {
+    "oil_ppl": 20,
+    "pch_ppl": 29,
+    "nuclear_g_ppl":92,
+    "biogas_ppl":169,
+    "solar_fotovoltaic_ppl":12,
+    "solar_csp_ppl":58,
+    "onshore_wind_ppl":31,
+    "offshore_wind_ppl":87,
+    "biomass_retrofit_ppl":10,
+    "biomass_greenfield_ppl":65,
+    "GN_open_cycle_ppl":12,
+    "GN_combined_cycle_ppl":18,
     "national_coal_ppl":28,
     "imported_coal_ppl":28,
     "large_hydroelectric_ppl":29,
@@ -301,11 +500,16 @@ for tec, val in costs.items():
 
 
 
-
+#O&M + Fuel
 costs = {
-    "national_coal_ppl":4.7,
-    "imported_coal_ppl":7.0,
-
+    "biogas_ppl": 4.0,
+    "nuclear_g_ppl":5.7 + 16,
+    "national_coal_ppl":4.7 + 36.62,
+    "imported_coal_ppl":7.0 + 19.12,
+    "GN_open_cycle_ppl":4.0 + 75.60,
+    "GN_combined_cycle_ppl":2.3 + 61.60,
+    "biomass_retrofit_ppl":14.0,
+    "biomass_greenfield_ppl":7.0,
    
 }
 
