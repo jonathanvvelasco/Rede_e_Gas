@@ -22,7 +22,7 @@ scenario.add_spatial_sets({"country": country})
 
 scenario.add_set("commodity", ["electricity", "light"])
 scenario.add_set("level", ["secondary", "final", "useful"])
-scenario.add_set("technology", ["large_hydroelectric_ppl", "medium_hydroelectric_ppl","grid", "bulb"])
+scenario.add_set("technology", ["national_coal_ppl", "imported_coal_ppl","large_hydroelectric_ppl", "medium_hydroelectric_ppl","grid", "bulb"])
 scenario.add_set("mode", "standard")
 
 gdp_profile = pd.Series([0.71, 1.59, 3.71], index=pd.Index(model_horizon, name="Time"))
@@ -88,7 +88,6 @@ grid_in = base_input.assign(
 scenario.add_par("input", grid_in)
 
 
-
 large_hydroelectric_out = base_output.assign(
     technology="large_hydroelectric_ppl",
     commodity="electricity",
@@ -107,9 +106,29 @@ medium_hydroelectric_out = base_output.assign(
 )
 scenario.add_par("output", medium_hydroelectric_out)
 
+national_coal_out = base_output.assign(
+    technology="national_coal_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", national_coal_out)
+
+imported_coal_out = base_output.assign(
+    technology="imported_coal_ppl",
+    commodity="electricity",
+    level="secondary",
+    value=1.0,
+    unit="GWa",
+)
+scenario.add_par("output", imported_coal_out)
+
 
 
 capacity_factor = {
+    "national_coal_ppl":0.4,
+    "imported_coal_ppl":0.5,
     "large_hydroelectric_ppl":0.5,
     "medium_hydroelectric_ppl":0.55,
     "bulb": 1,
@@ -129,6 +148,8 @@ for tec, val in capacity_factor.items():
     scenario.add_par("capacity_factor", df)
 
     lifetime = {
+    "national_coal_ppl":35,
+    "imported_coal_ppl":35,
     "large_hydroelectric_ppl":50,
     "medium_hydroelectric_ppl":50,
     "bulb": 1,
@@ -147,7 +168,8 @@ for tec, val in lifetime.items():
 
 
 growth_technologies = [
-
+    "national_coal_ppl",
+    "imported_coal_ppl",
     "large_hydroelectric_ppl",
     "medium_hydroelectric_ppl",
 ]
@@ -226,6 +248,8 @@ scenario.add_par("interestrate", model_horizon, value=0.05, unit="-")
 mp.add_unit("USD/kW")
 
 costs = {
+    "national_coal_ppl":2100,
+    "imported_coal_ppl":2100,
     "large_hydroelectric_ppl":1800,
     "medium_hydroelectric_ppl":2100,
     "bulb": 1,
@@ -256,6 +280,8 @@ for tec, val in costs.items():
     scenario.add_par("inv_cost", df)
 
 costs = {
+    "national_coal_ppl":28,
+    "imported_coal_ppl":28,
     "large_hydroelectric_ppl":29,
     "medium_hydroelectric_ppl":29,
     "bulb": 1,
@@ -277,6 +303,8 @@ for tec, val in costs.items():
 
 
 costs = {
+    "national_coal_ppl":4.7,
+    "imported_coal_ppl":7.0,
 
    
 }
