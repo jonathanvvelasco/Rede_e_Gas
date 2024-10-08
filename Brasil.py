@@ -13,24 +13,31 @@ scenario = message_ix.Scenario(
     mp, model="Brazil Electrified", scenario="baseline", version="new"
 )
 
-history = [2008]
-model_horizon = [2013, 2018, 2023]
+# ============================================ Definicoes ==============================================================
+
+# Define ano historico e anos de simulacao
+history = [2010]
+model_horizon = [2015, 2020, 2025]
 scenario.add_horizon(year=history + model_horizon, firstmodelyear=model_horizon[0])
 
+# Define pais e subdivisoes
 country = "Brazil"
 scenario.add_spatial_sets({"country": country})
 
+# Define tecnologias
 scenario.add_set("commodity", ["electricity", "light"])
 scenario.add_set("level", ["secondary", "final", "useful"])
 scenario.add_set("technology", ["oil_ppl", "pch_ppl","nuclear_g_ppl", "biogas_ppl", "solar_fotovoltaic_ppl", "solar_csp_ppl","onshore_wind_ppl", "offshore_wind_ppl","biomass_retrofit_ppl", "biomass_greenfield_ppl","GN_open_cycle_ppl", "GN_combined_cycle_ppl","national_coal_ppl", "imported_coal_ppl","large_hydroelectric_ppl", "medium_hydroelectric_ppl","grid", "bulb"])
 scenario.add_set("mode", "standard")
+#=============================================================================================================================
 
 
+# ============================================ Input de Demanda ==============================================================
 
-
+#Insere valores de demanda em MWmédios
 demanda = pd.Series([77883, 100861, 119496], index=pd.Index(model_horizon, name="Time"))
 
-
+# Cria uso final da demanda
 light_demand = pd.DataFrame(
     {
         "node": country,
@@ -39,15 +46,19 @@ light_demand = pd.DataFrame(
         "year": model_horizon,
         "time": "year",
         "value": (demanda).round(),
-        "unit": "GWa",
+        "unit": "MWa",
     }
 )
-
 scenario.add_par("demand", light_demand)
+#=============================================================================================================================
 
+# Le anos de construcao e anos de producao
 year_df = scenario.vintage_and_active_years()
 vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
 
+
+# ============================================ Input de Demanda ==============================================================
+# Cria classe base para Input e Output
 base = dict(
     node_loc=country,
     year_vtg=vintage_years,
@@ -377,7 +388,7 @@ capacity = {"biomass_retrofit_ppl": 20,
 
 base_capacity = {
     'node_loc': country,
-    'year_vtg': [2013, 2018, 2023],
+    'year_vtg': [2015, 2020, 2025],
     'unit': 'GW',
 }
 
