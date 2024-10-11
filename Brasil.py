@@ -22,7 +22,16 @@ scenario.add_horizon(year=history + model_horizon, firstmodelyear=model_horizon[
 
 # Define pais e subdivisoes
 country = "Brazil"
+# regioes = ["Norte, Nordeste"...] # A gente pode olhar o codigo do Fernando para inspiracao
 scenario.add_spatial_sets({"country": country})
+# scenario.add_spatial_sets({"province": regioes})
+
+# Tarefas
+# 1. Região SE/CE (aprender a subdividir)
+# 2. Colocar 4 regiões
+# 3. Conectar 2 regiões (SE/CE e Sul) (ambos os sentidos)
+# 4. Conectar todas as rgiões (respeitando geografia)
+# 5. Calibrar características das regiões
 
 # Define tecnologias
 scenario.add_set("commodity", ["electricity", "light"])
@@ -57,7 +66,7 @@ year_df = scenario.vintage_and_active_years()
 vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
 
 
-# ============================================ Input de Demanda ==============================================================
+# ======================================= Links Input e Output ===============================================================
 # Cria classe base para Input e Output
 base = dict(
     node_loc=country,
