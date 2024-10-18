@@ -22,9 +22,7 @@ scenario.add_horizon(year=history + model_horizon, firstmodelyear=model_horizon[
 
 # Define pais e subdivisoes
 country = "Brazil"
-# regioes = ["Norte, Nordeste"...] # A gente pode olhar o codigo do Fernando para inspiracao
 scenario.add_spatial_sets({"country": country})
-# scenario.add_spatial_sets({"province": regioes})
 
 # Tarefas
 # 1. Região SE/CE (aprender a subdividir)
@@ -32,6 +30,20 @@ scenario.add_spatial_sets({"country": country})
 # 3. Conectar 2 regiões (SE/CE e Sul) (ambos os sentidos)
 # 4. Conectar todas as rgiões (respeitando geografia)
 # 5. Calibrar características das regiões
+
+
+#Definindo regiões
+
+scenario.set('map_spatial_hierarchy')
+
+nodes = ['SE/CE']
+space_level = 'province'
+scenario.add_set('lvl_spatial', space_level)
+for node in nodes:
+    scenario.add_set('node', node)
+    scenario.add_set('map_spatial_hierarchy', [space_level, node, country])
+
+scenario.set('map_spatial_hierarchy')
 
 # Define tecnologias
 scenario.add_set("commodity", ["electricity", "light"])
@@ -383,14 +395,14 @@ for i in old_activity.items():
     nomes_energias.append(i[0])
     uso_energias.append(i[1])
 
-
+'''
 plt.pie(uso_energias, shadow = True, autopct = "%.2f%%", pctdistance=1.15, startangle = 0, textprops={'fontsize': 9})
 plt.title("Proportions Usage")
 plt.legend(nomes_energias, loc='upper right', bbox_to_anchor=(1.68,0.85))
 plt.gcf().set_size_inches(10, 5)
 plt.savefig('6.png', dpi=200)
 plt.figure().clear()
-
+'''
 
 capacity = {"biomass_retrofit_ppl": 20,
        }
@@ -575,14 +587,14 @@ from message_ix.util.tutorial import prepare_plots
 
 prepare_plots(rep)
 
-
+'''
 b = pd.DataFrame(scenario.var("CAP"))
 b.to_excel("Capacidade.xlsx")
 c = pd.DataFrame(scenario.var("CAP_NEW"))
 c.to_excel("Nova Capacidade das Instalações.xlsx")
 d = pd.DataFrame(scenario.var("ACT"))
 d.to_excel("Atividade.xlsx")
-
+'''
 
 
 
