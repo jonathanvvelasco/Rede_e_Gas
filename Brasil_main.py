@@ -7,13 +7,16 @@ import matplotlib.pyplot as plt
 from message_ix.utils import make_df
 
 import inicio
+import link
 
 
 mp = ixmp.Platform()
 
 scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baseline", version="new")
 
-scenario = inicio.definicoes(pd,scenario)
+scenario    = inicio.definicoes(pd,scenario)
+base_input, base_output = link.base(make_df,scenario,"Brazil")
+scenario    = link.tecnologias(scenario,base_input, base_output)
 
 # Tarefas
 # 1. Região SE/CE (aprender a subdividir)
