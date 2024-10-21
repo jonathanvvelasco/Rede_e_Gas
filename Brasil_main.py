@@ -13,10 +13,11 @@ import link
 mp = ixmp.Platform()
 
 scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baseline", version="new")
+country = "Brazil"
 
-scenario    = inicio.definicoes(pd,scenario)
-base_input, base_output = link.base(make_df,scenario,"Brazil")
-scenario    = link.tecnologias(scenario,base_input, base_output)
+scenario, history, model_horizon    = inicio.definicoes(pd,scenario)
+vintage_years, act_years,base_input, base_output = link.base(make_df,scenario,"Brazil")
+scenario, grid_efficiency    = link.tecnologias(scenario,base_input, base_output)
 
 # Tarefas
 # 1. Região SE/CE (aprender a subdividir)

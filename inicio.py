@@ -44,4 +44,4 @@ def definicoes(pd,scenario):
     )
     scenario.add_par("demand", light_demand)
 
-    return scenario
+    return scenario, history, model_horizon
