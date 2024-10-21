@@ -1,203 +1,173 @@
 # Módulo Link (Input e Output)
 
-def base(make_df,scenario,country):
-    # Define base de Link de Input e Output
-    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    # 1- Le anos de construcao e anos de producao
-    year_df = scenario.vintage_and_active_years()
-    vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
-    # 2- Cria classe base para Input e Output
-    base = dict(
-        node_loc=country,
-        year_vtg=vintage_years,
-        year_act=act_years,
-        mode="standard",
-        time="year",
-        unit="-",
-    )
-    base_input = make_df("input", **base, node_origin=country, time_origin="year")
-    base_output = make_df("output", **base, node_dest=country, time_dest="year")
+def fator_capacidade(make_df,scenario,local,vintage_years, act_years):
+    # Descreve Fator de Capacidade de Tecnologias
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    capacity_factor = {
+        "oil_ppl": 0.2,
+        "pch_ppl": 0.5,
+        "nuclear_g_ppl":0.85,
+        "biogas_ppl":0.5,
+        "solar_fotovoltaic_ppl":0.4,
+        "solar_csp_ppl":0.2,
+        "onshore_wind_ppl":0.3,
+        "offshore_wind_ppl":0.3,
+        "biomass_retrofit_ppl":0.67,
+        "biomass_greenfield_ppl":0.67,
+        "GN_open_cycle_ppl":0.4,
+        "GN_combined_cycle_ppl":0.6,
+        "national_coal_ppl":0.4,
+        "imported_coal_ppl":0.5,
+        "large_hydroelectric_ppl":0.5,
+        "medium_hydroelectric_ppl":0.55,
+        "bulb": 1,
+    }
 
-    return vintage_years, act_years,base_input, base_output
+    for tec, val in capacity_factor.items():
+        df = make_df(
+            "capacity_factor",
+            node_loc=local,
+            year_vtg=vintage_years,
+            year_act=act_years,
+            time="year",
+            unit="-",
+            technology=tec,
+            value=val,
+        )
+        scenario.add_par("capacity_factor", df)
+
+    return scenario, capacity_factor
+
+
+def vida_util(make_df,scenario,local,model_horizon):
+    # Descreve a vida util de Tecnologias
+    lifetime = {
+    "oil_ppl": 20,
+    "pch_ppl": 20,
+    "nuclear_g_ppl":20,
+    "biogas_ppl":20,
+    "solar_fotovoltaic_ppl":20,
+    "solar_csp_ppl":20,
+    "onshore_wind_ppl":20,
+    "offshore_wind_ppl":20,
+    "biomass_retrofit_ppl":40,
+    "biomass_greenfield_ppl":20,
+    "GN_open_cycle_ppl":20,
+    "GN_combined_cycle_ppl":20,
+    "national_coal_ppl":35,
+    "imported_coal_ppl":35,
+    "large_hydroelectric_ppl":50,
+    "medium_hydroelectric_ppl":50,
+    "bulb": 1,
+    }
+
+    for tec, val in lifetime.items():
+        df = make_df(
+            "technical_lifetime",
+            node_loc=local,
+            year_vtg=model_horizon,
+            unit="y",
+            technology=tec,
+            value=val,
+        )
+        scenario.add_par("technical_lifetime", df)
+    return scenario
+
+
+def expansao_tecnologias(make_df,scenario,local,model_horizon):
+    # Define quais tecnologias sao aptas para expansao.
+    growth_technologies = [
+        "pch_ppl",
+        "nuclear_g_ppl",
+        "biogas_ppl",
+        "solar_fotovoltaic_ppl",
+        "solar_csp_ppl",
+        "onshore_wind_ppl",
+        "offshore_wind_ppl",
+        "biomass_retrofit_ppl",
+        "biomass_greenfield_ppl",
+        "GN_open_cycle_ppl",
+        "GN_combined_cycle_ppl",
+        "national_coal_ppl",
+        "imported_coal_ppl",
+        "large_hydroelectric_ppl",
+        "medium_hydroelectric_ppl",
+    ]
+
+    for tec in growth_technologies:
+        df = make_df(
+            "growth_activity_up",
+            node_loc=local,
+            year_act=model_horizon,
+            time="year",
+            unit="-",
+            technology=tec,
+            value=1.0,
+        )
+        scenario.add_par("growth_activity_up", df)
+    return scenario
+
+
+def historico_geracao(make_df,scenario,grid_efficiency,country,history,capacity_factor):
+    # Descreve historico de geracao de energia.
+    historic_demand =  60194
+    historic_generation = historic_demand / grid_efficiency
+    large_hydroelectric_fraction = 0.73532
+    pch_fraction = 0.04153
+    national_coal_fraction = 0.01339
+    gn_fraction = 0.07709
+    biomass_fraction = 0.05899
+    wind_fraction = 0.03887
+    nuclear_fraction  = 0.02834
+    oil_fraction = 0.00645
 
 
 
-def tecnologias(scenario,base_input,base_output):
-    # Define Link de Input e Output para Tecnologias
-    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    old_activity = {
+        "large_hydroelectric_ppl":(large_hydroelectric_fraction) * historic_generation,
+        "oil_ppl": oil_fraction * historic_generation,
+        "nuclear_g_ppl": nuclear_fraction*historic_generation,
+        "national_coal_ppl": national_coal_fraction* historic_generation,
+        "biomass_retrofit_ppl": biomass_fraction * historic_generation,
+        "onshore_wind_ppl": wind_fraction* historic_generation,
+        "GN_open_cycle_ppl": gn_fraction * historic_generation,
+        "pch_ppl": pch_fraction * historic_generation,
 
-    # Tecnologia Lampada (Final -> Util)
-    bulb_out    = base_output.assign(technology="bulb", commodity="light", level="useful", value=1.0)
-    bulb_in     = base_input.assign(technology="bulb", commodity="electricity", level="final", value=1.0)
-    scenario.add_par("output", bulb_out)
-    scenario.add_par("input", bulb_in)
-    scenario.idx_names("input")
+    }
+    nomes_energias = []
+    uso_energias = []
 
-    # Tecnologia Rede Eletrica (Secundaria -> Final)
-    grid_efficiency = 1
-    grid_out = base_output.assign(technology="grid", commodity="electricity", level="final", value=grid_efficiency)
-    grid_in  = base_input.assign(technology="grid", commodity="electricity", level="secondary", value=1.0)
-    scenario.add_par("output", grid_out)
-    scenario.add_par("input", grid_in)
 
-    # Geracao a Oleo ( ... -> Secundaria)
-    oil_out = base_output.assign(
-        technology="oil_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", oil_out)
+    for i in old_activity.items():
+        nomes_energias.append(i[0])
+        uso_energias.append(i[1])
 
-    # Geracao PCH ( ... -> Secundaria)
-    pch_out = base_output.assign(
-        technology="pch_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", pch_out)
 
-    # Geracao Nuclear ( ... -> Secundaria)
-    nuclear_g_out = base_output.assign(
-        technology="nuclear_g_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", nuclear_g_out)
 
-    # Geracao Biogas ( ... -> Secundaria)
-    biogas_out = base_output.assign(
-        technology="biogas_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", biogas_out)
 
-    # Geracao Solar Fotovoltaica ( ... -> Secundaria)
-    solar_fotovoltaic_out = base_output.assign(
-        technology="solar_fotovoltaic_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", solar_fotovoltaic_out)
+    for tec, val in old_activity.items():
+        df = make_df(
+            "historical_activity",
+            node_loc=country,
+            year_act=history,
+            mode="standard",
+            time="year",
+            unit="GWa",
+            technology=tec,
+            value=val,
+        )
+        scenario.add_par("historical_activity", df)
 
-    # Geracao Solar CSP ( ... -> Secundaria)
-    solar_csp_out = base_output.assign(
-        technology="solar_csp_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", solar_csp_out)
 
-    # Geracao Eolica Onshore ( ... -> Secundaria)
-    onshore_wind_out = base_output.assign(
-        technology="onshore_wind_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", onshore_wind_out)
-
-    # Geracao Eolica Offshore ( ... -> Secundaria)
-    offshore_wind_out = base_output.assign(
-        technology="offshore_wind_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", offshore_wind_out)
-
-    # Geracao Biomassa Retrofit ( ... -> Secundaria)
-    biomass_retrofit_out = base_output.assign(
-        technology="biomass_retrofit_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", biomass_retrofit_out)
-
-    # Geracao Eolica Onshore ( ... -> Secundaria)
-    biomass_greenfield_out = base_output.assign(
-        technology="biomass_greenfield_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", biomass_greenfield_out)
-
-    # Geracao GN Ciclo Aberto ( ... -> Secundaria)
-    GN_open_cycle_out = base_output.assign(
-        technology="GN_open_cycle_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", GN_open_cycle_out)
-
-    # Geracao GN Ciclo Combinado ( ... -> Secundaria)
-    GN_combined_cycle_out = base_output.assign(
-        technology="GN_combined_cycle_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", GN_combined_cycle_out)
-
-    # Geracao Hidroeletrica Grande ( ... -> Secundaria)
-    large_hydroelectric_out = base_output.assign(
-        technology="large_hydroelectric_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", large_hydroelectric_out)
-
-    # Geracao Hidroeletrica Media ( ... -> Secundaria)
-    medium_hydroelectric_out = base_output.assign(
-        technology="medium_hydroelectric_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", medium_hydroelectric_out)
-
-    # Geracao Carvao Nacional ( ... -> Secundaria)
-    national_coal_out = base_output.assign(
-        technology="national_coal_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", national_coal_out)
-
-    # Geracao Carvao Importado ( ... -> Secundaria)
-    imported_coal_out = base_output.assign(
-        technology="imported_coal_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", imported_coal_out)
-
-    return scenario, grid_efficiency
+    for tec in old_activity:
+        value = old_activity[tec] / (1 * 10 * capacity_factor[tec])
+        df = make_df(
+            "historical_new_capacity",
+            node_loc=country,
+            year_vtg=history,
+            unit="GWa",
+            technology=tec,
+            value=value,
+        )
+        scenario.add_par("historical_new_capacity", df)
+    return scenario

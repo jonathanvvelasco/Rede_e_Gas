@@ -14,7 +14,7 @@ def definicoes(pd,scenario):
     #Definindo regiões
     scenario.set('map_spatial_hierarchy')
     nodes = ['SE/CE']
-    space_level = 'province'
+    space_level = 'regiao'
     scenario.add_set('lvl_spatial', space_level)
     for node in nodes:
         scenario.add_set('node', node)
@@ -44,4 +44,4 @@ def definicoes(pd,scenario):
     )
     scenario.add_par("demand", light_demand)
 
-    return scenario, history, model_horizon
+    return scenario, history, model_horizon, country
