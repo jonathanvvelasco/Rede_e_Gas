@@ -1,6 +1,6 @@
 # Módulo Link (Input e Output)
 
-def base(make_df,scenario,country):
+def base(make_df,scenario,local):
     # Define base de Link de Input e Output
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # 1- Le anos de construcao e anos de producao
@@ -8,15 +8,15 @@ def base(make_df,scenario,country):
     vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
     # 2- Cria classe base para Input e Output
     base = dict(
-        node_loc=country,
+        node_loc=local,
         year_vtg=vintage_years,
         year_act=act_years,
         mode="standard",
         time="year",
         unit="-",
     )
-    base_input = make_df("input", **base, node_origin=country, time_origin="year")
-    base_output = make_df("output", **base, node_dest=country, time_dest="year")
+    base_input = make_df("input", **base, node_origin=local, time_origin="year")
+    base_output = make_df("output", **base, node_dest=local, time_dest="year")
 
     return vintage_years, act_years,base_input, base_output
 

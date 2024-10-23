@@ -1,4 +1,4 @@
-# Módulo Definicoes
+# Modulo Definicoes
 
 def definicoes(pd,scenario):
     # Define ano historico e anos de simulacao
