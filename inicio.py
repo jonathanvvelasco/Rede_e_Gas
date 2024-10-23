@@ -13,7 +13,7 @@ def definicoes(pd,scenario):
 
     #Definindo regiões
     scenario.set('map_spatial_hierarchy')
-    nodes = ['SE/CE']
+    nodes = ['N','NE','SE/CE', 'S']
     space_level = 'regiao'
     scenario.add_set('lvl_spatial', space_level)
     for node in nodes:
@@ -32,12 +32,16 @@ def definicoes(pd,scenario):
     scenario.add_set("technology", ["oil_ppl", "pch_ppl","nuclear_g_ppl", "biogas_ppl", "solar_fotovoltaic_ppl", "solar_csp_ppl","onshore_wind_ppl", "offshore_wind_ppl","biomass_retrofit_ppl", "biomass_greenfield_ppl","GN_open_cycle_ppl", "GN_combined_cycle_ppl","national_coal_ppl", "imported_coal_ppl","large_hydroelectric_ppl", "medium_hydroelectric_ppl","grid", "bulb"])
     scenario.add_set("mode", "standard")
 
-    # Define demanda em MWmédios
-    # ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    return scenario, history, model_horizon, country, nodes
+
+
+def demanda(pd,scenario,model_horizon,local):
+    # Define demanda em MWmédios (ao ano)
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     demanda = pd.Series([77883, 100861, 119496], index=pd.Index(model_horizon, name="Time"))
     light_demand = pd.DataFrame(
         {
-            "node": country,
+            "node": local,
             "commodity": "light",
             "level": "useful",
             "year": model_horizon,
@@ -48,4 +52,4 @@ def definicoes(pd,scenario):
     )
     scenario.add_par("demand", light_demand)
 
-    return scenario, history, model_horizon, country, nodes
+    return scenario

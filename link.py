@@ -22,7 +22,7 @@ def base(make_df,scenario,local):
 
 
 
-def tecnologias(scenario,base_input,base_output):
+def tecnologias(scenario,base_input,base_output,local):
     # Define Link de Input e Output para Tecnologias
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -61,14 +61,16 @@ def tecnologias(scenario,base_input,base_output):
     scenario.add_par("output", pch_out)
 
     # Geracao Nuclear ( ... -> Secundaria)
-    nuclear_g_out = base_output.assign(
-        technology="nuclear_g_ppl",
-        commodity="electricity",
-        level="secondary",
-        value=1.0,
-        unit="GWa",
-    )
-    scenario.add_par("output", nuclear_g_out)
+    # somente para 'SE/CE'.
+    if local == 'SE/CE':
+        nuclear_g_out = base_output.assign(
+            technology="nuclear_g_ppl",
+            commodity="electricity",
+            level="secondary",
+            value=1.0,
+            unit="GWa",
+        )
+        scenario.add_par("output", nuclear_g_out)
 
     # Geracao Biogas ( ... -> Secundaria)
     biogas_out = base_output.assign(
