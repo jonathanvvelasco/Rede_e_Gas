@@ -21,6 +21,10 @@ def definicoes(pd,scenario):
         scenario.add_set('map_spatial_hierarchy', [space_level, node, country])
     scenario.set('map_spatial_hierarchy')
 
+    # Define taxa de desconto anual
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    scenario.add_par("interestrate", model_horizon, value=0.05, unit="-")
+
     # Define tecnologias 
     # ^^^^^^^^^^^^^^^^^^
     scenario.add_set("commodity", ["electricity", "light"])
@@ -44,4 +48,4 @@ def definicoes(pd,scenario):
     )
     scenario.add_par("demand", light_demand)
 
-    return scenario, history, model_horizon, country
+    return scenario, history, model_horizon, country, nodes

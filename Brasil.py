@@ -13,10 +13,11 @@ import descreve
 
 mp = ixmp.Platform()
 
+#mp.add_unit("USD/kW")
 scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baseline", version="new")
 
 
-scenario, history, model_horizon, country           = inicio.definicoes(pd,scenario)
+scenario, history, model_horizon, country, nodes    = inicio.definicoes(pd,scenario)
 vintage_years, act_years,base_input, base_output    = link.base(make_df,scenario,country)
 scenario, grid_efficiency                           = link.tecnologias(scenario,base_input, base_output)
 scenario, capacity_factor           = descreve.fator_capacidade(make_df,scenario,country,vintage_years, act_years)
@@ -24,7 +25,7 @@ scenario                            = descreve.vida_util(make_df,scenario,countr
 scenario                            = descreve.expansao_tecnologias(make_df,scenario,country,model_horizon)
 scenario        = descreve.historico_geracao(make_df,scenario,grid_efficiency,country,history,capacity_factor)
 
-
+#------------------- Limita capacidade de biomassa ---------------------
 
 capacity = {"biomass_retrofit_ppl": 20,
        }
@@ -40,11 +41,8 @@ for tec, val in capacity.items():
     scenario.add_par('bound_new_capacity_up', df)
 
 
-scenario.add_par("interestrate", model_horizon, value=0.05, unit="-") # o que significa essa linha?
 
-
-mp.add_unit("USD/kW")
-
+#------------------- Descreve Custo de Investimento ---------------------
 costs = {
     "oil_ppl": 10000,
     "pch_ppl": 2600,
@@ -65,18 +63,6 @@ costs = {
     "bulb": 1,
     
 }
-energias = []
-custos =[]
-for j in costs.items():
-    if j[0] != 'bulb':
-        energias.append(j[0])
-        custos.append(j[1])
-
-plt.pie(custos, shadow = True, startangle = 0, textprops={'fontsize': 9}, labels = custos)
-plt.title("Investment Costs (USD/kW)")
-plt.legend(energias, loc='upper right', bbox_to_anchor=(1.68,0.85))
-plt.gcf().set_size_inches(10, 5)
-plt.figure().clear()
 
 for tec, val in costs.items():
     df = make_df(
@@ -89,6 +75,8 @@ for tec, val in costs.items():
     )
     scenario.add_par("inv_cost", df)
 
+
+#------------------- Descreve Custo Fixo ---------------------
 costs = {
     "oil_ppl": 20,
     "pch_ppl": 29,
@@ -122,7 +110,7 @@ for tec, val in costs.items():
     scenario.add_par("fix_cost", df)
 
 
-
+#------------------- Descreve Custo Variavel ---------------------
 #O&M + Fuel
 costs = {
     "biogas_ppl": 4.0,
@@ -135,9 +123,6 @@ costs = {
     "biomass_greenfield_ppl":7.0,
    
 }
-
-
-
 
 for tec, val in costs.items():
     df = make_df(
