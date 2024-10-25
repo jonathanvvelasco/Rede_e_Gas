@@ -34,6 +34,8 @@ for local in nodes:
     scenario                                = descreve.custo_variavel       (make_df,scenario,local,vintage_years, act_years)
     scenario                                = limites.expansao_up           (make_df,scenario,local)
 
+scenario = link.transmissao_S_SE(make_df,scenario)
+scenario = link.transmissao_SE_S(make_df,scenario)
 
 scenario.solve()
 
@@ -47,13 +49,13 @@ mp.close_db()
 
 """
 # Tarefas
-[] 1. Região SE/CE (aprender a subdividir)
-    [] Revisar unidades no programa (USD, MW e MWa)
+[x] 1. Região SE/CE (aprender a subdividir)
     [x] Trocar country por regiao
 [x] 2. Colocar 4 regiões
-[] 3. Conectar 2 regiões (SE/CE e Sul) (ambos os sentidos)
+[x] 3. Conectar 2 regiões (SE/CE e Sul) (ambos os sentidos)
 [] 4. Conectar todas as rgiões (respeitando geografia)
 [] 5. Calibrar características das regiões
-[] 6. Acrescentar ifs em cada modulo, para customizar dados de entrada por regiao
+    [] Acrescentar ifs em cada modulo, para customizar dados de entrada por regiao
+[] 6. Revisar unidades no programa (USD, MW e MWa)
 Obs: os dados inseridos devem contemplar todas as regioes.
 """
