@@ -78,7 +78,7 @@ def expande_tecnologias(make_df,scenario,local,model_horizon):
     # Define quais tecnologias sao aptas para expansao.
 
     growth_technologies = [
-        "pch_ppl",
+        "pch_ppl", # "pch_NE_ppl"
         "nuclear_g_ppl",
         "biogas_ppl",
         "solar_fotovoltaic_ppl",
