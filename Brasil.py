@@ -42,6 +42,8 @@ scenario.solve()
 
 #saidas.gera_excel(pd,scenario)
 
+print("O modelo foi rodado com sucesso.")
+
 
 mp.close_db()
 
@@ -50,12 +52,13 @@ mp.close_db()
 """
 # Tarefas
 [x] 1. Região SE/CE (aprender a subdividir)
-    [x] Trocar country por regiao
+    [x] Trocar country por subsystem
 [x] 2. Colocar 4 regiões
 [x] 3. Conectar 2 regiões (SE/CE e Sul) (ambos os sentidos)
 [] 4. Conectar todas as rgiões (respeitando geografia)
 [] 5. Calibrar características das regiões
-    [] Acrescentar ifs em cada modulo, para customizar dados de entrada por regiao
+    [] Acrescentar ifs em cada modulo, para customizar dados de entrada por subsystem
 [] 6. Revisar unidades no programa (USD, MW e MWa)
+[] 7. Acrescentar tecnologia household para depois virar serviço energético
 Obs: os dados inseridos devem contemplar todas as regioes.
 """

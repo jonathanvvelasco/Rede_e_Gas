@@ -81,7 +81,7 @@ def tecnologias(scenario,base_input,base_output,local):
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     # Tecnologia Lampada (Final -> Util)
-    bulb_out    = base_output.assign(technology="bulb", commodity="light", level="useful", value=1.0)
+    bulb_out    = base_output.assign(technology="bulb", commodity="electric_households", level="useful", value=1.0)
     bulb_in     = base_input.assign(technology="bulb", commodity="electricity", level="final", value=1.0)
     scenario.add_par("output", bulb_out)
     scenario.add_par("input", bulb_in)
