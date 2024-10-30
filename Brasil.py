@@ -65,7 +65,7 @@ mp.close_db()
 [] 6. Revisar unidades no programa (USD, MW e MWa) - 
     1. Conferir nos exemplos Westros e Austria (e no GAMS?)
     2. Conferir as unidades na planilha (ou no artigo mesmo)
-[] 7. (Jon 1) Acrescentar tecnologia household para depois virar serviço energético
+[x] 7. (Jon 1) Acrescentar tecnologia household para depois virar serviço energético
 [] 8. (Ric 2) Trocar termos para inglês
 Obs: os dados inseridos devem contemplar todas as regioes.
 """

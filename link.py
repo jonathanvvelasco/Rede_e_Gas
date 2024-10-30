@@ -81,7 +81,7 @@ def tecnologias(scenario,base_input,base_output,local):
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     # Tecnologia Eletrodomesticos (Final -> Final)
-    housing_out    = base_output.assign(technology="electric_housing", commodity="electricity", level="final", value=1.0)
+    housing_out    = base_output.assign(technology="electric_housing", commodity="electric_households", level="final", value=1.0)
     housing_in     = base_input.assign(technology="electric_housing", commodity="electricity", level="final", value=1.0)
     scenario.add_par("output", housing_out)
     scenario.add_par("input", housing_in)
@@ -89,7 +89,7 @@ def tecnologias(scenario,base_input,base_output,local):
 
     # Tecnologia Lampada (Final -> Util)
     bulb_out    = base_output.assign(technology="bulb", commodity="electric_households", level="useful", value=1.0)
-    bulb_in     = base_input.assign(technology="bulb", commodity="electricity", level="final", value=1.0)
+    bulb_in     = base_input.assign(technology="bulb", commodity="electric_households", level="final", value=1.0)
     scenario.add_par("output", bulb_out)
     scenario.add_par("input", bulb_in)
     scenario.idx_names("input")
