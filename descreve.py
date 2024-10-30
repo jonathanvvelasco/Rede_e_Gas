@@ -20,6 +20,7 @@ def fator_capacidade(make_df,scenario,local,vintage_years, act_years):
         "imported_coal_ppl":0.5,
         "large_hydroelectric_ppl":0.5,
         "medium_hydroelectric_ppl":0.55,
+        "electric_housing": 1,
         "bulb": 1,
     }
 
@@ -58,6 +59,7 @@ def vida_util(make_df,scenario,local,model_horizon):
     "imported_coal_ppl":35,
     "large_hydroelectric_ppl":50,
     "medium_hydroelectric_ppl":50,
+    "electric_housing": 1,
     "bulb": 1,
     }
 
@@ -186,6 +188,7 @@ def custo_investimento(make_df,scenario,local,model_horizon):
         "imported_coal_ppl":2100,
         "large_hydroelectric_ppl":1800,
         "medium_hydroelectric_ppl":2100,
+        "electric_housing": 1,
         "bulb": 1,
     }
 
@@ -224,6 +227,7 @@ def custo_fixo(make_df,scenario,local,vintage_years, act_years):
         "imported_coal_ppl":28,
         "large_hydroelectric_ppl":29,
         "medium_hydroelectric_ppl":29,
+        "electric_housing": 1,
         "bulb": 1,
     }
 
