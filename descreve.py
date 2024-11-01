@@ -137,6 +137,9 @@ def historico_geracao(make_df,scenario,grid_efficiency,local,history,capacity_fa
         "pch_" + local + "_ppl": pch_fraction * historic_generation,
     }
 
+    if (local == 'S') or (local == 'N'):
+        old_activity["nuclear_g_"+local+"_ppl"]=0
+
     # 3- Add values to the parameter "historical_activity"
     for tec, val in old_activity.items():
         df = make_df(
