@@ -117,7 +117,7 @@ def tecnologias(scenario,base_input,base_output,local):
 
     # Nuclear Generation ( ... -> Secondary)
     # Only for 'SE/CW'.
-    if local == 'SE/CW':
+    if (local == 'SE/CW') or (local == 'NE'):
         nuclear_g_out = base_output.assign(
             technology="nuclear_g_" + local + "_ppl",
             commodity="electricity",
