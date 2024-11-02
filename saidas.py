@@ -1,16 +1,16 @@
-# Modulo Saidas
+# Module Saidas
 
 def gera_excel(pd,scenario):
-    # Gera saidas Excel
+    # Create Excel outputs
     # ^^^^^^^^^^^^^^^^^
 
     b = pd.DataFrame(scenario.var("CAP"))
-    b.to_excel("Capacidade.xlsx")
+    b.to_excel("Capacity.xlsx")
     
     c = pd.DataFrame(scenario.var("CAP_NEW"))
-    c.to_excel("Nova Capacidade das Instalações.xlsx")
+    c.to_excel("New Capacity.xlsx")
 
     d = pd.DataFrame(scenario.var("ACT"))
-    d.to_excel("Atividade.xlsx")
+    d.to_excel("Activity.xlsx")
 
     return None
