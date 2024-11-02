@@ -63,17 +63,17 @@ mp.close_db()
     [x] Trocar country por subsystem
 [x] 2. Colocar 4 subsystems
 [x] 3. Conectar 2 subsystems (SE/CE e Sul) (ambos os sentidos)
-[] 4. (Jon 2) Conectar todas as subsystems (respeitando geografia)
-[] 5. Calibrar características das subsystems
+[x] 4. (Jon e Ric) Conectar todas as subsystems (respeitando geografia)
+[x] 5. Calibrar características das subsystems
     [x] (Ric 1) Renomear tecnologias, evidenciando o nome de cada uma:
         1.listar no inicio,  # "pch_NE_ppl"
         2.copiar link para cada tecnologia 
         3.ctrl+C e ctrl+V descrição de custos para cada tecnologia
-    [] (?) Acrescentar ifs em cada modulo, para customizar dados de entrada por subsystem
+    [x] (?) Acrescentar ifs em cada modulo, para customizar dados de entrada por subsystem
 [] 6. Revisar unidades no programa (USD, MW e MWa) - 
     1. Conferir nos exemplos Westros e Austria (e no GAMS?)
     2. Conferir as unidades na planilha (ou no artigo mesmo)
 [x] 7. (Jon 1) Acrescentar tecnologia household para depois virar serviço energético
-[] 8. (Ric 2) Trocar termos para inglês
+[x] 8. (Ric 2) Trocar termos para inglês
 Obs: os dados inseridos devem contemplar todas as regioes.
 """
