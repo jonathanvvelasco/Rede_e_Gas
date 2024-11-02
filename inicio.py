@@ -55,7 +55,7 @@ def definicoes(pd,scenario):
     scenario.add_set("commodity", ["gas","gas households"])
     scenario.add_set("level", ["primary","secondary", "final", "useful"])
     scenario.add_set("technology", technology)
-    scenario.add_set("technology", ['transmissao_S_SE', 'transmissao_SE_S',"transmissao_SE_NE", "transmissao_NE_SE"])
+    scenario.add_set("technology", ['transmissao_S_SE', 'transmissao_SE_S',"transmissao_SE_NE", "transmissao_NE_SE", "transmissao_N_NE", "transmissao_NE_N", "transmissao_N_SE", "transmissao_SE_N"])
     scenario.add_set("mode", "standard")
 
     return scenario, history, model_horizon, country, nodes
