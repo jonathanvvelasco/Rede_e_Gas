@@ -49,13 +49,13 @@ def transmissao_S_SE(make_df,scenario):
 
 
 def transmissao_SE_S(make_df,scenario):
-    # Define the input and output link between S and SE
+    # Define the input and output link between SE and S
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # 1- Read the construction years and production years
     year_df = scenario.vintage_and_active_years()
     vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
     # 2- Create a basis class for input and output
-    base_S_SE = dict(
+    base_SE_S = dict(
         node_loc='SE/CW',
         year_vtg=vintage_years,
         year_act=act_years,
@@ -63,8 +63,8 @@ def transmissao_SE_S(make_df,scenario):
         time="year",
         unit="-",
     )
-    base_SE_S_input = make_df("input", **base_S_SE, node_origin='SE/CW', time_origin="year")
-    base_SE_S_output = make_df("output", **base_S_SE, node_dest='S', time_dest="year")
+    base_SE_S_input = make_df("input", **base_SE_S, node_origin='SE/CW', time_origin="year")
+    base_SE_S_output = make_df("output", **base_SE_S, node_dest='S', time_dest="year")
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
@@ -91,13 +91,13 @@ def transmissao_SE_NE(make_df,scenario):
         time="year",
         unit="-",
     )
-    base_SE_S_input = make_df("input", **base_SE_NE, node_origin='SE/CW', time_origin="year")
-    base_SE_S_output = make_df("output", **base_SE_NE, node_dest='NE', time_dest="year")
+    base_SE_NE_input = make_df("input", **base_SE_NE, node_origin='SE/CW', time_origin="year")
+    base_SE_NE_output = make_df("output", **base_SE_NE, node_dest='NE', time_dest="year")
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_SE_S_output.assign(technology="transmissao_SE_NE", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_SE_S_input.assign(technology="transmissao_SE_NE", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_SE_NE_output.assign(technology="transmissao_SE_NE", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_SE_NE_input.assign(technology="transmissao_SE_NE", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
@@ -105,7 +105,7 @@ def transmissao_SE_NE(make_df,scenario):
 
 
 def transmissao_NE_SE(make_df,scenario):
-    # Define the input and output link between SE and NE
+    # Define the input and output link between NE and SE
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # 1- Read the construction years and production years
     year_df = scenario.vintage_and_active_years()
@@ -131,6 +131,115 @@ def transmissao_NE_SE(make_df,scenario):
 
     return scenario
 
+
+def transmissao_N_NE(make_df,scenario):
+    # Define the input and output link between N and NE
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # 1- Read the construction years and production years
+    year_df = scenario.vintage_and_active_years()
+    vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
+    # 2- Create a basis class for input and output
+    base_N_NE = dict(
+        node_loc='N',
+        year_vtg=vintage_years,
+        year_act=act_years,
+        mode="standard",
+        time="year",
+        unit="-",
+    )
+    base_N_NE_input = make_df("input", **base_N_NE, node_origin='N', time_origin="year")
+    base_N_NE_output = make_df("output", **base_N_NE, node_dest='NE', time_dest="year")
+
+    # Power Transmission Technology (Secondary -> Secondary)
+    grid_efficiency = 1
+    grid_out = base_N_NE_output.assign(technology="transmissao_N_NE", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_N_NE_input.assign(technology="transmissao_N_NE", commodity="electricity", level="secondary", value=1.0)
+    scenario.add_par("output", grid_out)
+    scenario.add_par("input", grid_in)
+
+    return scenario
+
+def transmissao_NE_N(make_df,scenario):
+    # Define the input and output link between NE and N
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # 1- Read the construction years and production years
+    year_df = scenario.vintage_and_active_years()
+    vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
+    # 2- Create a basis class for input and output
+    base_NE_N = dict(
+        node_loc='NE',
+        year_vtg=vintage_years,
+        year_act=act_years,
+        mode="standard",
+        time="year",
+        unit="-",
+    )
+    base_NE_N_input = make_df("input", **base_NE_N, node_origin='NE', time_origin="year")
+    base_NE_N_output = make_df("output", **base_NE_N, node_dest='N', time_dest="year")
+
+    # Power Transmission Technology (Secondary -> Secondary)
+    grid_efficiency = 1
+    grid_out = base_NE_N_output.assign(technology="transmissao_NE_N", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_NE_N_input.assign(technology="transmissao_NE_N", commodity="electricity", level="secondary", value=1.0)
+    scenario.add_par("output", grid_out)
+    scenario.add_par("input", grid_in)
+
+    return scenario
+
+
+def transmissao_N_SE(make_df,scenario):
+    # Define the input and output link between N and SE
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # 1- Read the construction years and production years
+    year_df = scenario.vintage_and_active_years()
+    vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
+    # 2- Create a basis class for input and output
+    base_N_SE = dict(
+        node_loc='N',
+        year_vtg=vintage_years,
+        year_act=act_years,
+        mode="standard",
+        time="year",
+        unit="-",
+    )
+    base_N_SE_input = make_df("input", **base_N_SE, node_origin='N', time_origin="year")
+    base_N_SE_output = make_df("output", **base_N_SE, node_dest='SE/CW', time_dest="year")
+
+    # Power Transmission Technology (Secondary -> Secondary)
+    grid_efficiency = 1
+    grid_out = base_N_SE_output.assign(technology="transmissao_N_SE", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_N_SE_input.assign(technology="transmissao_N_SE", commodity="electricity", level="secondary", value=1.0)
+    scenario.add_par("output", grid_out)
+    scenario.add_par("input", grid_in)
+
+    return scenario
+
+def transmissao_SE_N(make_df,scenario):
+    # Define the input and output link between SE and N
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # 1- Read the construction years and production years
+    year_df = scenario.vintage_and_active_years()
+    vintage_years, act_years = year_df["year_vtg"], year_df["year_act"]
+    # 2- Create a basis class for input and output
+    base_SE_N = dict(
+        node_loc='SE/CW',
+        year_vtg=vintage_years,
+        year_act=act_years,
+        mode="standard",
+        time="year",
+        unit="-",
+    )
+    base_SE_N_input = make_df("input", **base_SE_N, node_origin='SE/CW', time_origin="year")
+    base_SE_N_output = make_df("output", **base_SE_N, node_dest='N', time_dest="year")
+
+    # Power Transmission Technology (Secondary -> Secondary)
+    grid_efficiency = 1
+    grid_out = base_SE_N_output.assign(technology="transmissao_SE_N", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_SE_N_input.assign(technology="transmissao_SE_N", commodity="electricity", level="secondary", value=1.0)
+    scenario.add_par("output", grid_out)
+    scenario.add_par("input", grid_in)
+
+    return scenario
 
 def tecnologias(scenario,base_input,base_output,local):
     

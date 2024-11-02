@@ -40,11 +40,15 @@ scenario = link.transmissao_S_SE(make_df,scenario)
 scenario = link.transmissao_SE_S(make_df,scenario)
 scenario = link.transmissao_SE_NE(make_df,scenario)
 scenario = link.transmissao_NE_SE(make_df,scenario)
+scenario = link.transmissao_N_NE(make_df,scenario)
+scenario = link.transmissao_NE_N(make_df,scenario)
+scenario = link.transmissao_N_SE(make_df,scenario)
+scenario = link.transmissao_SE_N(make_df,scenario)
 
 scenario.solve()
 
 
-saidas.gera_excel(pd,scenario)
+#saidas.gera_excel(pd,scenario)
 
 tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
