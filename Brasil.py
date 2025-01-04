@@ -3,8 +3,6 @@ import ixmp
 import message_ix
 from matplotlib.pyplot import *
 import matplotlib.pyplot as plt
-from tkinter import messagebox
-import tkinter as tk
 
 from message_ix.utils import make_df
 
@@ -38,19 +36,13 @@ for local in nodes:
 
 scenario = link.transmissao_S_SE(make_df,scenario)
 scenario = link.transmissao_SE_S(make_df,scenario)
-scenario = link.transmissao_SE_NE(make_df,scenario)
-scenario = link.transmissao_NE_SE(make_df,scenario)
-scenario = link.transmissao_N_NE(make_df,scenario)
-scenario = link.transmissao_NE_N(make_df,scenario)
-scenario = link.transmissao_N_SE(make_df,scenario)
-scenario = link.transmissao_SE_N(make_df,scenario)
 
 scenario.solve()
 
 
 #saidas.gera_excel(pd,scenario)
 
-tk.messagebox.showinfo("Notification", "The code has been successfully run!")
+print("O modelo foi rodado com sucesso.")
 
 
 mp.close_db()
@@ -65,7 +57,7 @@ mp.close_db()
 [x] 3. Conectar 2 subsystems (SE/CE e Sul) (ambos os sentidos)
 [] 4. (Jon 2) Conectar todas as subsystems (respeitando geografia)
 [] 5. Calibrar características das subsystems
-    [x] (Ric 1) Renomear tecnologias, evidenciando o nome de cada uma:
+    [] (Ric 1) Renomear tecnologias, evidenciando o nome de cada uma:
         1.listar no inicio,  # "pch_NE_ppl"
         2.copiar link para cada tecnologia 
         3.ctrl+C e ctrl+V descrição de custos para cada tecnologia

@@ -1,9 +1,9 @@
-# Module Limites
+# Modulo Limites
 
 def expansao_up(make_df,scenario,local):
-    # Define the maximum limit of technologies expansion
+    # Define limite maximo de expansao de tecnologias
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    capacity = {"biomass_retrofit_" + local + "_ppl": 20,
+    capacity = {"biomass_retrofit_ppl": 20,
         }
 
     base_capacity = {
