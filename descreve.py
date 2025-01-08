@@ -261,6 +261,7 @@ def custo_variavel(make_df,scenario,local,vintage_years, act_years):
         "biomass_greenfield_" + local + "_ppl":7.0,
     }
 
+
     # Add values to the parameter "var_cost"
     for tec, val in costs.items():
         df = make_df(
@@ -270,7 +271,7 @@ def custo_variavel(make_df,scenario,local,vintage_years, act_years):
             year_act=act_years,
             mode="standard",
             time="year",
-            unit="USD/kWa",
+            unit="USD/MWh",
             technology=tec,
             value=val,
         )

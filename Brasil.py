@@ -16,6 +16,7 @@ import saidas
 
 
 mp = ixmp.Platform()
+mp.add_unit("USD/MWh")
 
 
 scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baseline", version="new")
@@ -45,10 +46,11 @@ scenario = link.transmissao_NE_N(make_df,scenario)
 scenario = link.transmissao_N_SE(make_df,scenario)
 scenario = link.transmissao_SE_N(make_df,scenario)
 
+
 scenario.solve()
 
 
-#saidas.gera_excel(pd,scenario)
+saidas.gera_excel(pd,scenario)
 
 tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
