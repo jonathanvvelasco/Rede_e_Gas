@@ -114,7 +114,7 @@ def historico_geracao(make_df,scenario,grid_efficiency,local,history,capacity_fa
     # Describe the energy generation historic.
 
     # 1- Insert the participation fraction of each technology in the generation (base year).
-    historic_demand =  60194
+    historic_demand =  60.194 # -> Demand (GWa)
     historic_generation = historic_demand / grid_efficiency
     large_hydroelectric_fraction = 0.73532
     pch_fraction = 0.04153
