@@ -65,8 +65,8 @@ def demand(pd,scenario,model_horizon,local):
     # Define demand (Mwa)
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     demand_gw = [77.883, 100.861, 119.496]
-    demand_mw = [valor * 1000 for valor in demand_gw]
-    demanda = pd.Series(demand_mw, index=pd.Index(model_horizon, name="Time"))
+    #demand_mw = [valor * 1000 for valor in demand_gw]
+    demanda = pd.Series(demand_gw, index=pd.Index(model_horizon, name="Time"))
     electric_demand = pd.DataFrame(
         {
             "node": local,
