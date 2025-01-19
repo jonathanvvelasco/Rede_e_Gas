@@ -10,7 +10,7 @@ def generate_excel(pd,scenario):
     c = pd.DataFrame(scenario.var("CAP_NEW"))
     c.to_excel("New Capacity.xlsx")
 
-    d = pd.DataFrame(scenario.var("ACT"))
+    d = pd.DataFrame(scenario.var("ACT")).pivot_table(index="technology", columns="year_act", values="lvl", aggfunc="sum")
     d.to_excel("Activity.xlsx")
 
     return None

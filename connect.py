@@ -40,8 +40,8 @@ def transmission_S_SE(make_df,scenario):
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_S_SE_output.assign(technology="transmissao_S_SE", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_S_SE_input.assign(technology="transmissao_S_SE", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_S_SE_output.assign(technology="transmission_S_SE/CW", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_S_SE_input.assign(technology="transmission_S_SE/CW", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
@@ -68,8 +68,8 @@ def transmission_SE_S(make_df,scenario):
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_SE_S_output.assign(technology="transmissao_SE_S", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_SE_S_input.assign(technology="transmissao_SE_S", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_SE_S_output.assign(technology="transmission_SE/CW_S", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_SE_S_input.assign(technology="transmission_SE/CW_S", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
@@ -96,8 +96,8 @@ def transmission_SE_NE(make_df,scenario):
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_SE_NE_output.assign(technology="transmissao_SE_NE", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_SE_NE_input.assign(technology="transmissao_SE_NE", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_SE_NE_output.assign(technology="transmission_SE/CW_NE", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_SE_NE_input.assign(technology="transmission_SE/CW_NE", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
@@ -124,8 +124,8 @@ def transmission_NE_SE(make_df,scenario):
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_NE_SE_output.assign(technology="transmissao_NE_SE", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_NE_SE_input.assign(technology="transmissao_NE_SE", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_NE_SE_output.assign(technology="transmission_NE_SE/CW", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_NE_SE_input.assign(technology="transmission_NE_SE/CW", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
@@ -152,8 +152,8 @@ def transmission_N_NE(make_df,scenario):
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_N_NE_output.assign(technology="transmissao_N_NE", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_N_NE_input.assign(technology="transmissao_N_NE", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_N_NE_output.assign(technology="transmission_N_NE", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_N_NE_input.assign(technology="transmission_N_NE", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
@@ -179,8 +179,8 @@ def transmission_NE_N(make_df,scenario):
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_NE_N_output.assign(technology="transmissao_NE_N", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_NE_N_input.assign(technology="transmissao_NE_N", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_NE_N_output.assign(technology="transmission_NE_N", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_NE_N_input.assign(technology="transmission_NE_N", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
@@ -207,8 +207,8 @@ def transmission_N_SE(make_df,scenario):
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_N_SE_output.assign(technology="transmissao_N_SE", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_N_SE_input.assign(technology="transmissao_N_SE", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_N_SE_output.assign(technology="transmission_N_SE/CW", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_N_SE_input.assign(technology="transmission_N_SE/CW", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
@@ -234,8 +234,8 @@ def transmission_SE_N(make_df,scenario):
 
     # Power Transmission Technology (Secondary -> Secondary)
     grid_efficiency = 1
-    grid_out = base_SE_N_output.assign(technology="transmissao_SE_N", commodity="electricity", level="secondary", value=grid_efficiency)
-    grid_in  = base_SE_N_input.assign(technology="transmissao_SE_N", commodity="electricity", level="secondary", value=1.0)
+    grid_out = base_SE_N_output.assign(technology="transmission_SE/CW_N", commodity="electricity", level="secondary", value=grid_efficiency)
+    grid_in  = base_SE_N_input.assign(technology="transmission_SE/CW_N", commodity="electricity", level="secondary", value=1.0)
     scenario.add_par("output", grid_out)
     scenario.add_par("input", grid_in)
 
