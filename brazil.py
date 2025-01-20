@@ -55,7 +55,7 @@ scenario.solve()
 
 
 
-##outputs.generate_excel(pd,scenario)
+outputs.generate_excel(pd,scenario)
 
 ##tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
@@ -140,6 +140,7 @@ values_n = {"North (values in GWa)": ["North Generation", "North Demand", "Diffe
 values_n = pd.DataFrame(values_n)
 
 print(values_n)
+print("")
 
 
 ###################
@@ -225,6 +226,7 @@ values_ne = {"Northeast (values in GWa)": ["Northeast Generation", "Northeast De
 values_ne = pd.DataFrame(values_ne)
 
 print(values_ne)
+print("")
 
 
 ###################
@@ -308,6 +310,7 @@ values_se = {"Southeast (values in GWa)": ["Southeast Generation", "Southeast De
 values_se = pd.DataFrame(values_se)
 
 print(values_se)
+print("")
 
 ###################
 
