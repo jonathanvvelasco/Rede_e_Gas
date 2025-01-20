@@ -237,7 +237,7 @@ def fix_costs(make_df,scenario,local,vintage_years, act_years):
             node_loc=local,
             year_vtg=vintage_years,
             year_act=act_years,
-            unit="USD/kW-a",
+            unit="USD/kW-y",
             technology=tec,
             value=val,
         )
