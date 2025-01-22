@@ -23,41 +23,52 @@ def validation_table(pd):
     table = pd.read_excel("Activity.xlsx")
 
     #############################
-
+    
 
     ############North############
 
-    demand_north = [0,0,0]
-    act_north = [0,0,0]
-    transmission_north_in = [0,0,0]
-    transmission_north_out = [0,0,0]
-    roles_n = ["", "", ""]
-    answers_n = ["", "", ""]
 
+    ###Creating lists###
+
+    demand_north = []
+    act_north= []
+    transmission_north_in = []
+    transmission_north_out = []
+    roles_n = []
+    answers_n = []
+
+    for n in range(len(table.axes[1])-1):
+    
+        demand_north.append(0)
+        act_north.append(0)
+        transmission_north_in.append(0)
+        transmission_north_out.append(0)
+        roles_n.append("")
+        answers_n.append("")
+
+    ####################
 
 
     for j in range(len(table["technology"])):
         if "bulb_N" in table["technology"][j] and "_NE" not in table["technology"][j]:
-            demand_north[0] = demand_north [0] + (float(table[2015][j]))
-            demand_north[1] = demand_north [1] + float(table[2020][j])
-            demand_north[2] = demand_north [2] + float(table[2025][j])
+            for i in range(len(table.axes[1])-1):
+                demand_north[i] = demand_north [i] + (float(table[table.axes[1][i+1]][j]))
+
 
         else:
             if "bulb_N" not in table["technology"][j] and "_NE" not in table["technology"][j] and "transmission" not in table["technology"][j] and "grid" not in table["technology"][j] and "_N_" in table["technology"][j]:
-                act_north[0] = act_north[0] + float(table[2015][j])
-                act_north[1] = act_north[1] + float(table[2020][j])
-                act_north[2] = act_north[2] + float(table[2025][j])
+                for i in range(len(table.axes[1])-1):
+                    act_north[i] = act_north [i] + (float(table[table.axes[1][i+1]][j]))
 
             elif "transmission" in table["technology"][j]:
                 if "_N" in table["technology"][j]:
                     if "_N_" in table["technology"][j]:
-                            transmission_north_out[0] = transmission_north_out[0] + float(table[2015][j])
-                            transmission_north_out[1] = transmission_north_out[1] + float(table[2020][j])
-                            transmission_north_out[2] = transmission_north_out[2] + float(table[2025][j])
+                        for i in range(len(table.axes[1])-1):
+                                transmission_north_out[i] = transmission_north_out[i] + (float(table[table.axes[1][i+1]][j]))
+
                     elif ("SE/CW_N" in table["technology"][j] and "NE" not in table["technology"][j]) or ("NE_N" not in table["technology"][j]):
-                            transmission_north_in[0] = transmission_north_in[0] + float(table[2015][j])
-                            transmission_north_in[1] = transmission_north_in[1] + float(table[2020][j])
-                            transmission_north_in[2] = transmission_north_in[2] + float(table[2025][j])
+                        for i in range(len(table.axes[1])-1):
+                                transmission_north_in[i] = transmission_north_in[i] + (float(table[table.axes[1][i+1]][j]))
 
     ###Roles###
                             
@@ -87,10 +98,11 @@ def validation_table(pd):
     #creating the table
 
 
-    values_n = {"North (values in GWa)": ["North Generation", "North Demand", "Difference", "Role", "Transmission leaves N", "Transmission joins N", "N total transmission", "Error (difference - transmission)", "Validated?"],
-                "2015": [act_north[0], demand_north[0], act_north[0]-demand_north[0], roles_n[0], transmission_north_out[0], transmission_north_in[0], transmission_north_out[0] - transmission_north_in[0], (((transmission_north_out[0]-transmission_north_in[0]) - (act_north[0] - demand_north[0]))), answers_n[0]],
-                "2020": [act_north[1], demand_north[1], act_north[1]-demand_north[1], roles_n[1], transmission_north_out[1], transmission_north_in[1], transmission_north_out[1] - transmission_north_in[1], (((transmission_north_out[1]-transmission_north_in[1]) - (act_north[1] - demand_north[1]))), answers_n[1]],        
-                "2025": [act_north[2], demand_north[2], act_north[2]-demand_north[2], roles_n[2], transmission_north_out[2], transmission_north_in[2], transmission_north_out[2] - transmission_north_in[2], (((transmission_north_out[2]-transmission_north_in[2]) - (act_north[2] - demand_north[2]))), answers_n[2]]}
+    values_n = {"North (values in GWa)": ["North Generation", "North Demand", "Difference", "Role", "Transmission leaves N", "Transmission joins N", "N total transmission", "Error (difference - transmission)", "Validated?"]}
+
+    for p in range(len(table.axes[1])-1):
+        values_n[table.axes[1][p+1]] = [act_north[p], demand_north[p], act_north[p]-demand_north[p], roles_n[p], transmission_north_out[p], transmission_north_in[p], transmission_north_out[p] - transmission_north_in[p], (((transmission_north_out[p]-transmission_north_in[p]) - (act_north[p] - demand_north[p]))), answers_n[p]]
+
 
 
     values_n = pd.DataFrame(values_n)
@@ -117,37 +129,46 @@ def validation_table(pd):
 
     ############Northeast############
 
-    demand_northeast = [0,0,0]
-    act_northeast = [0,0,0]
-    transmission_northeast_in = [0,0,0]
-    transmission_northeast_out = [0,0,0]
-    roles_ne = ["", "", ""]
-    answers_ne = ["", "", ""]
+    ###Creating lists###
 
+    demand_northeast = []
+    act_northeast = []
+    transmission_northeast_in = []
+    transmission_northeast_out = []
+    roles_ne = []
+    answers_ne = []
+
+    for n in range(len(table.axes[1])-1):
+    
+        demand_northeast.append(0)
+        act_northeast.append(0)
+        transmission_northeast_in.append(0)
+        transmission_northeast_out.append(0)
+        roles_ne.append("")
+        answers_ne.append("")
+
+    ####################
 
 
     for j in range(len(table["technology"])):
         if "bulb_NE" in table["technology"][j]:
-            demand_northeast[0] = demand_northeast [0] + (float(table[2015][j]))
-            demand_northeast[1] = demand_northeast [1] + float(table[2020][j])
-            demand_northeast[2] = demand_northeast [2] + float(table[2025][j])
+            for i in range(len(table.axes[1])-1):
+                demand_northeast[i] = demand_northeast [i] + (float(table[table.axes[1][i+1]][j]))
 
         else:
             if "bulb" not in table["technology"][j] and "transmission" not in table["technology"][j] and "grid" not in table["technology"][j] and "_NE_" in table["technology"][j]:
-                act_northeast[0] = act_northeast[0] + float(table[2015][j])
-                act_northeast[1] = act_northeast[1] + float(table[2020][j])
-                act_northeast[2] = act_northeast[2] + float(table[2025][j])
+                for i in range(len(table.axes[1])-1):
+                    act_northeast[i] = act_northeast [i] + (float(table[table.axes[1][i+1]][j]))
 
             elif "transmission" in table["technology"][j]:
                 if "_NE" in table["technology"][j]:
                     if "_NE_" in table["technology"][j]:
-                            transmission_northeast_out[0] = transmission_northeast_out[0] + float(table[2015][j])
-                            transmission_northeast_out[1] = transmission_northeast_out[1] + float(table[2020][j])
-                            transmission_northeast_out[2] = transmission_northeast_out[2] + float(table[2025][j])
+                        for i in range(len(table.axes[1])-1):
+                            transmission_northeast_out[i] = transmission_northeast_out[i] + (float(table[table.axes[1][i+1]][j]))
+                            
                     else:
-                            transmission_northeast_in[0] = transmission_northeast_in[0] + float(table[2015][j])
-                            transmission_northeast_in[1] = transmission_northeast_in[1] + float(table[2020][j])
-                            transmission_northeast_in[2] = transmission_northeast_in[2] + float(table[2025][j])
+                        for i in range(len(table.axes[1])-1):
+                            transmission_northeast_in[i] = transmission_northeast_in[i] + (float(table[table.axes[1][i+1]][j]))
 
     ###Roles###
                             
@@ -174,10 +195,10 @@ def validation_table(pd):
     #creating the table
 
 
-    values_ne = {"Northeast (values in GWa)": ["Northeast Generation", "Northeast Demand", "Difference", "Role", "Transmission leaves NE", "Transmission joins NE", "NE total transmission", "Error (difference - transmission)", "Validated?"],
-                "2015": [act_northeast[0], demand_northeast[0], act_northeast[0]-demand_northeast[0], roles_ne[0], transmission_northeast_out[0], transmission_northeast_in[0], transmission_northeast_out[0] - transmission_northeast_in[0], (((transmission_northeast_out[0]-transmission_northeast_in[0]) - (act_northeast[0] - demand_northeast[0]))), answers_ne[0]],
-                "2020": [act_northeast[1], demand_northeast[1], act_northeast[1]-demand_northeast[1], roles_ne[1], transmission_northeast_out[1], transmission_northeast_in[1], transmission_northeast_out[1] - transmission_northeast_in[1], (((transmission_northeast_out[1]-transmission_northeast_in[1]) - (act_northeast[1] - demand_northeast[1]))), answers_ne[1]],        
-                "2025": [act_northeast[2], demand_northeast[2], act_northeast[2]-demand_northeast[2], roles_ne[2], transmission_northeast_out[2], transmission_northeast_in[2], transmission_northeast_out[2] - transmission_northeast_in[2], (((transmission_northeast_out[2]-transmission_northeast_in[2]) - (act_northeast[2] - demand_northeast[2]))), answers_ne[2]]}
+    values_ne = {"Northeast (values in GWa)": ["Northeast Generation", "Northeast Demand", "Difference", "Role", "Transmission leaves NE", "Transmission joins NE", "NE total transmission", "Error (difference - transmission)", "Validated?"]}
+
+    for p in range(len(table.axes[1])-1):
+        values_ne[table.axes[1][p+1]] = [act_northeast[p], demand_northeast[p], act_northeast[p]-demand_northeast[p], roles_ne[p], transmission_northeast_out[p], transmission_northeast_in[p], transmission_northeast_out[p] - transmission_northeast_in[p], (((transmission_northeast_out[p]-transmission_northeast_in[p]) - (act_northeast[p] - demand_northeast[p]))), answers_ne[p]]
 
     values_ne = pd.DataFrame(values_ne)
 
@@ -199,39 +220,47 @@ def validation_table(pd):
 
 
     ############Southeast############
+    
 
+    ###Creating lists###
 
-    demand_southeast = [0,0,0]
-    act_southeast = [0,0,0]
-    transmission_southeast_in = [0,0,0]
-    transmission_southeast_out = [0,0,0]
-    roles_se = ["", "", ""]
-    answers_se = ["", "", ""]
+    demand_southeast = []
+    act_southeast = []
+    transmission_southeast_in = []
+    transmission_southeast_out = []
+    roles_se = []
+    answers_se = []
 
+    for n in range(len(table.axes[1])-1):
+    
+        demand_southeast.append(0)
+        act_southeast.append(0)
+        transmission_southeast_in.append(0)
+        transmission_southeast_out.append(0)
+        roles_se.append("")
+        answers_se.append("")
+
+    ####################
 
 
     for j in range(len(table["technology"])):
         if "bulb_SE/CW" in table["technology"][j]:
-            demand_southeast[0] = demand_southeast [0] + (float(table[2015][j]))
-            demand_southeast[1] = demand_southeast [1] + float(table[2020][j])
-            demand_southeast[2] = demand_southeast [2] + float(table[2025][j])
+            for i in range(len(table.axes[1])-1):
+                demand_southeast[i] = demand_southeast[i] + (float(table[table.axes[1][i+1]][j]))
 
         else:
             if "bulb" not in table["technology"][j] and "transmission" not in table["technology"][j] and "grid" not in table["technology"][j] and "_SE/CW_" in table["technology"][j]:
-                act_southeast[0] = act_southeast[0] + float(table[2015][j])
-                act_southeast[1] = act_southeast[1] + float(table[2020][j])
-                act_southeast[2] = act_southeast[2] + float(table[2025][j])
+                for i in range(len(table.axes[1])-1):
+                    act_southeast[i] = act_southeast[i] + (float(table[table.axes[1][i+1]][j]))
 
             elif "transmission" in table["technology"][j]:
                 if "_SE/CW" in table["technology"][j]:
                     if "_SE/CW_" in table["technology"][j]:
-                            transmission_southeast_out[0] = transmission_southeast_out[0] + float(table[2015][j])
-                            transmission_southeast_out[1] = transmission_southeast_out[1] + float(table[2020][j])
-                            transmission_southeast_out[2] = transmission_southeast_out[2] + float(table[2025][j])
+                         for i in range(len(table.axes[1])-1):
+                            transmission_southeast_out[i] = transmission_southeast_out[i] + (float(table[table.axes[1][i+1]][j]))
                     else:
-                            transmission_southeast_in[0] = transmission_southeast_in[0] + float(table[2015][j])
-                            transmission_southeast_in[1] = transmission_southeast_in[1] + float(table[2020][j])
-                            transmission_southeast_in[2] = transmission_southeast_in[2] + float(table[2025][j])
+                        for i in range(len(table.axes[1])-1):
+                            transmission_southeast_in[i] = transmission_southeast_in[i] + (float(table[table.axes[1][i+1]][j]))
 
     ###Roles###
                             
@@ -258,12 +287,13 @@ def validation_table(pd):
     #creating the table
 
 
-    values_se = {"Southeast (values in GWa)": ["Southeast Generation", "Southeast Demand", "Difference", "Role", "Transmission leaves SE", "Transmission joins SE", "SE total transmission", "Error (difference - transmission)", "Validated?"],
-                "2015": [act_southeast[0], demand_southeast[0], act_southeast[0]-demand_southeast[0], roles_se[0], transmission_southeast_out[0], transmission_southeast_in[0], transmission_southeast_out[0] - transmission_southeast_in[0], (((transmission_southeast_out[0]-transmission_southeast_in[0]) - (act_southeast[0] - demand_southeast[0]))), answers_se[0]],
-                "2020": [act_southeast[1], demand_southeast[1], act_southeast[1]-demand_southeast[1], roles_se[1], transmission_southeast_out[1], transmission_southeast_in[1], transmission_southeast_out[1] - transmission_southeast_in[1], (((transmission_southeast_out[1]-transmission_southeast_in[1]) - (act_southeast[1] - demand_southeast[1]))), answers_se[1]],        
-                "2025": [act_southeast[2], demand_southeast[2], act_southeast[2]-demand_southeast[2], roles_se[2], transmission_southeast_out[2], transmission_southeast_in[2], transmission_southeast_out[2] - transmission_southeast_in[2], (((transmission_southeast_out[2]-transmission_southeast_in[2]) - (act_southeast[2] - demand_southeast[2]))), answers_se[2]]}
+    values_se = {"Southeast (values in GWa)": ["Southeast Generation", "Southeast Demand", "Difference", "Role", "Transmission leaves SE", "Transmission joins SE", "SE total transmission", "Error (difference - transmission)", "Validated?"]}
+
+    for p in range(len(table.axes[1])-1):
+        values_se[table.axes[1][p+1]] = [act_southeast[p], demand_southeast[p], act_southeast[p]-demand_southeast[p], roles_se[p], transmission_southeast_out[p], transmission_southeast_in[p], transmission_southeast_out[p] - transmission_southeast_in[p], (((transmission_southeast_out[p]-transmission_southeast_in[p]) - (act_southeast[p] - demand_southeast[p]))), answers_se[p]]
 
     values_se = pd.DataFrame(values_se)
+
 
     print(values_se)
     print("")
@@ -275,38 +305,48 @@ def validation_table(pd):
     ############South############
 
 
+    ###Creating lists###
 
-    demand_south = [0,0,0]
-    act_south = [0,0,0]
-    transmission_south_in = [0,0,0]
-    transmission_south_out = [0,0,0]
-    roles_s = ["", "", ""]
-    answers_s = ["", "", ""]
+    demand_south = []
+    act_south = []
+    transmission_south_in = []
+    transmission_south_out = []
+    roles_s = []
+    answers_s = []
+
+    for n in range(len(table.axes[1])-1):
+    
+        demand_south.append(0)
+        act_south.append(0)
+        transmission_south_in.append(0)
+        transmission_south_out.append(0)
+        roles_s.append("")
+        answers_s.append("")
+
+    ####################
 
 
 
     for j in range(len(table["technology"])):
         if "bulb_S" == table["technology"][j]:
-            demand_south[0] = demand_south [0] + (float(table[2015][j]))
-            demand_south[1] = demand_south[1] + float(table[2020][j])
-            demand_south[2] = demand_south [2] + float(table[2025][j])
+            for i in range(len(table.axes[1])-1):
+                demand_south[i] = demand_south[i] + (float(table[table.axes[1][i+1]][j]))
+
 
         else:
             if "bulb" not in table["technology"][j] and "transmission" not in table["technology"][j] and "grid" not in table["technology"][j] and "_S_" in table["technology"][j]:
-                act_south[0] = act_south[0] + float(table[2015][j])
-                act_south[1] = act_south[1] + float(table[2020][j])
-                act_south[2] = act_south[2] + float(table[2025][j])
+                for i in range(len(table.axes[1])-1):
+                    act_south[i] = act_south[i] + (float(table[table.axes[1][i+1]][j]))
 
             elif "transmission" in table["technology"][j]:
                 if "_S" in table["technology"][j]:
                     if "_S_" in table["technology"][j]:
-                            transmission_south_out[0] = transmission_south_out[0] + float(table[2015][j])
-                            transmission_south_out[1] = transmission_south_out[1] + float(table[2020][j])
-                            transmission_south_out[2] = transmission_south_out[2] + float(table[2025][j])
+                            for i in range(len(table.axes[1])-1):
+                                transmission_south_out[i] = transmission_south_out[i] + (float(table[table.axes[1][i+1]][j]))
+                                
                     elif "_SE/CW_S" in table["technology"][j]:
-                            transmission_south_in[0] = transmission_south_in[0] + float(table[2015][j])
-                            transmission_south_in[1] = transmission_south_in[1] + float(table[2020][j])
-                            transmission_south_in[2] = transmission_south_in[2] + float(table[2025][j])
+                            for i in range(len(table.axes[1])-1):
+                                transmission_south_in[i] = transmission_south_in[i] + (float(table[table.axes[1][i+1]][j]))
 
     ###Roles###
                             
@@ -333,10 +373,10 @@ def validation_table(pd):
     #creating the table
 
 
-    values_s = {"South (values in GWa)": ["South Generation", "South Demand", "Difference", "Role", "Transmission leaves S", "Transmission joins S", "S total transmission", "Error (difference - transmission)", "Validated?"],
-                "2015": [act_south[0], demand_south[0], act_south[0]-demand_south[0], roles_s[0], transmission_south_out[0], transmission_south_in[0], transmission_south_out[0] - transmission_south_in[0], (((transmission_south_out[0]-transmission_south_in[0]) - (act_south[0] - demand_south[0]))), answers_s[0]],
-                "2020": [act_south[1], demand_south[1], act_south[1]-demand_south[1], roles_s[1], transmission_south_out[1], transmission_south_in[1], transmission_south_out[1] - transmission_south_in[1], (((transmission_south_out[1]-transmission_south_in[1]) - (act_south[1] - demand_south[1]))), answers_s[1]],        
-                "2025": [act_south[2], demand_south[2], act_south[2]-demand_south[2], roles_s[2], transmission_south_out[2], transmission_south_in[2], transmission_south_out[2] - transmission_south_in[2], (((transmission_south_out[2]-transmission_south_in[2]) - (act_south[2] - demand_south[2]))), answers_s[2]]}
+    values_s = {"South (values in GWa)": ["South Generation", "South Demand", "Difference", "Role", "Transmission leaves S", "Transmission joins S", "S total transmission", "Error (difference - transmission)", "Validated?"]}
+
+    for p in range(len(table.axes[1])-1):
+        values_s[table.axes[1][p+1]] = [act_south[p], demand_south[p], act_south[p]-demand_south[p], roles_s[p], transmission_south_out[p], transmission_south_in[p], transmission_south_out[p] - transmission_south_in[p], (((transmission_south_out[p]-transmission_south_in[p]) - (act_south[p] - demand_south[p]))), answers_s[p]]
 
     values_s = pd.DataFrame(values_s)
 
