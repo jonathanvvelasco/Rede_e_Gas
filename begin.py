@@ -68,10 +68,16 @@ def demand(pd,scenario,model_horizon,local):
     demand_gw_N  = [ 4.63,  5.52,  7.10]
     demand_gw_NE = [ 9.20, 10.74, 12.33]
     demand_gw_SW = [35.84, 38.62, 42.91]
-    demand_gw_s  = [10.21, 11.42, 12.95]
+    demand_gw_S  = [10.21, 11.42, 12.95]
+
     if local == 'N':
-        demand_gw = demand_gw
-    
+        demand_gw = demand_gw_N
+    if local == 'NE':
+        demand_gw = demand_gw_NE
+    if local == 'SW/CW':
+        demand_gw = demand_gw_SW
+    if local == 'S':
+        demand_gw = demand_gw_S
     # demand_mw = [valor * 1000 for valor in demand_gw]
     demanda = pd.Series(demand_gw, index=pd.Index(model_horizon, name="Time"))
     electric_demand = pd.DataFrame(

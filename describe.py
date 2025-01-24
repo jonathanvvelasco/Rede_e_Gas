@@ -114,8 +114,19 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
 
     # 1- Insert the participation fraction of each technology in the generation (base year).
     historic_demand =  60.194 # -> Demand (GWa)
-    #if local == 'N':
-    #    historic_demand = 3.67
+    historic_demand_N = 3.67
+    historic_demand_NE = 7.61
+    historic_demand_SE = 31.78
+    historic_demand_S = 8.50
+
+    if local == 'N':
+        historic_demand = historic_demand_N
+    if local == 'NE':
+        historic_demand = historic_demand_NE
+    if local == 'SE/CW':
+        historic_demand = historic_demand_SE
+    if local == 'S':
+        historic_demand = historic_demand_S
     historic_generation = historic_demand / grid_efficiency
     large_hydroelectric_fraction = 0.73532
     pch_fraction = 0.04153
