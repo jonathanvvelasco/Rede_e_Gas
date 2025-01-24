@@ -48,7 +48,7 @@ def validation_table(pd):
 
     ####################
 
-
+    
     for j in range(len(table["technology"])):
         if "bulb_N" in table["technology"][j] and "_NE" not in table["technology"][j]:
             for i in range(len(table.axes[1])-1):
@@ -66,7 +66,8 @@ def validation_table(pd):
                         for i in range(len(table.axes[1])-1):
                                 transmission_north_out[i] = transmission_north_out[i] + (float(table[table.axes[1][i+1]][j]))
 
-                    elif ("SE/CW_N" in table["technology"][j] and "NE" not in table["technology"][j]) or ("NE_N" not in table["technology"][j]):
+                    elif (table["technology"][j] == "transmission_SE/CW_N") or (table["technology"][j] == "transmission_NE_N"):
+                        print(table["technology"][j])
                         for i in range(len(table.axes[1])-1):
                                 transmission_north_in[i] = transmission_north_in[i] + (float(table[table.axes[1][i+1]][j]))
 
@@ -83,7 +84,7 @@ def validation_table(pd):
     ###Validation###
 
             
-        if (float((transmission_north_out[j]-transmission_north_in[j]) - (act_north[j] - demand_north[j]))) < 10**(-5):
+        if (abs((transmission_north_out[j]-transmission_north_in[j]) - (act_north[j] - demand_north[j]))) < 10**(-5):
             answers_n[j] = "Yes"
         else:
             answers_n[j] = "No"
@@ -183,7 +184,7 @@ def validation_table(pd):
     ###Validation###
 
             
-        if (float((transmission_northeast_out[j]-transmission_northeast_in[j]) - (act_northeast[j] - demand_northeast[j]))) < 10**(-5):
+        if (abs((transmission_northeast_out[j]-transmission_northeast_in[j]) - (act_northeast[j] - demand_northeast[j]))) < 10**(-5):
             answers_ne[j] = "Yes"
         else:
             answers_ne[j] = "No"
@@ -275,7 +276,7 @@ def validation_table(pd):
     ###Validation###
 
             
-        if (float((transmission_southeast_out[j]-transmission_southeast_in[j]) - (act_southeast[j] - demand_southeast[j]))) < 10**(-5):
+        if (abs((transmission_southeast_out[j]-transmission_southeast_in[j]) - (act_southeast[j] - demand_southeast[j]))) < 10**(-5):
             answers_se[j] = "Yes"
         else:
             answers_se[j] = "No"
@@ -361,7 +362,7 @@ def validation_table(pd):
     ###Validation###
 
             
-        if (float((transmission_south_out[j]-transmission_south_in[j]) - (act_south[j] - demand_south[j]))) < 10**(-5):
+        if (abs((transmission_south_out[j]-transmission_south_in[j]) - (act_south[j] - demand_south[j]))) < 10**(-5):
             answers_s[j] = "Yes"
         else:
             answers_s[j] = "No"
