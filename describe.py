@@ -173,7 +173,7 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
             "historical_new_capacity",
             node_loc=local,
             year_vtg=history,
-            unit="GWa",
+            unit="GW",
             technology=tec,
             value=value,
         )
