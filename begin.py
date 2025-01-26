@@ -64,7 +64,6 @@ def definitions(pd,scenario):
 def demand(pd,scenario,model_horizon,local):
     # Define demand (Mwa)
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    demand_gw = [77.883, 100.861, 119.496]
     demand_gw_N  = [ 4.63,  5.52,  7.10]
     demand_gw_NE = [ 9.20, 10.74, 12.33]
     demand_gw_SW = [35.84, 38.62, 42.91]
@@ -74,7 +73,7 @@ def demand(pd,scenario,model_horizon,local):
         demand_gw = demand_gw_N
     if local == 'NE':
         demand_gw = demand_gw_NE
-    if local == 'SW/CW':
+    if local == 'SE/CW':
         demand_gw = demand_gw_SW
     if local == 'S':
         demand_gw = demand_gw_S
@@ -87,7 +86,7 @@ def demand(pd,scenario,model_horizon,local):
             "level": "useful",
             "year": model_horizon,
             "time": "year",
-            "value": (demanda).round(),
+            "value": demanda,
             "unit": "MWa",
         }
     )
