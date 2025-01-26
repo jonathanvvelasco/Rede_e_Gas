@@ -67,7 +67,6 @@ def validation_table(pd):
                                 transmission_north_out[i] = transmission_north_out[i] + (float(table[table.axes[1][i+1]][j]))
 
                     elif (table["technology"][j] == "transmission_SE/CW_N") or (table["technology"][j] == "transmission_NE_N"):
-                        print(table["technology"][j])
                         for i in range(len(table.axes[1])-1):
                                 transmission_north_in[i] = transmission_north_in[i] + (float(table[table.axes[1][i+1]][j]))
 

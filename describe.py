@@ -138,16 +138,53 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
     oil_fraction = 0.00645
 
     # 2- Define the generated energy values for each technology in the base year.
-    old_activity = {
-        "large_hydroelectric_" + local + "_ppl":(large_hydroelectric_fraction) * historic_generation,
-        "oil_" + local + "_ppl": oil_fraction * historic_generation,
-        "nuclear_g_" + local + "_ppl": nuclear_fraction*historic_generation,
-        "national_coal_" + local + "_ppl": national_coal_fraction* historic_generation,
-        "biomass_retrofit_" + local + "_ppl": biomass_fraction * historic_generation,
-        "onshore_wind_" + local + "_ppl": wind_fraction* historic_generation,
-        "GN_open_cycle_" + local + "_ppl": gn_fraction * historic_generation,
-        "pch_" + local + "_ppl": pch_fraction * historic_generation,
-    }
+    if local == 'N':
+        old_activity = {
+            "large_hydroelectric_" + local + "_ppl": 3.93,
+            "oil_" + local + "_ppl": 0,
+            "nuclear_g_" + local + "_ppl": 0,
+            "national_coal_" + local + "_ppl": 0,
+            "biomass_retrofit_" + local + "_ppl": 0,
+            "onshore_wind_" + local + "_ppl": 0,
+            "GN_open_cycle_" + local + "_ppl": 0,
+            "pch_" + local + "_ppl": 0.22,
+        }
+    
+    if local == 'NE':
+        old_activity = {
+            "large_hydroelectric_" + local + "_ppl":5.52,
+            "oil_" + local + "_ppl": 0.015,
+            "nuclear_g_" + local + "_ppl": 0,
+            "national_coal_" + local + "_ppl": 0.03,
+            "biomass_retrofit_" + local + "_ppl": 0.14,
+            "onshore_wind_" + local + "_ppl": 0.04,
+            "GN_open_cycle_" + local + "_ppl": 0.18,
+            "pch_" + local + "_ppl": 0.31,
+        }
+    
+    if local == 'SE/CW':
+        old_activity = {
+            "large_hydroelectric_" + local + "_ppl": 29.11,
+            "oil_" + local + "_ppl": 0.069,
+            "nuclear_g_" + local + "_ppl": 1.54,
+            "national_coal_" + local + "_ppl": 0.14,
+            "biomass_retrofit_" + local + "_ppl": 0.63,
+            "onshore_wind_" + local + "_ppl": 1.54,
+            "GN_open_cycle_" + local + "_ppl": 0.83,
+            "pch_" + local + "_ppl": 1.64,
+        }
+    
+    if local == 'S':
+        old_activity = {
+            "large_hydroelectric_" + local + "_ppl": 6.10,
+            "oil_" + local + "_ppl": 0.04,
+            "nuclear_g_" + local + "_ppl": 0,
+            "national_coal_" + local + "_ppl": 0.08,
+            "biomass_retrofit_" + local + "_ppl": 0.36,
+            "onshore_wind_" + local + "_ppl": 0.04,
+            "GN_open_cycle_" + local + "_ppl": 0.47,
+            "pch_" + local + "_ppl": 0.34,
+        }
 
     if (local == 'S') or (local == 'N'):
         old_activity["nuclear_g_"+local+"_ppl"]=0
