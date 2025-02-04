@@ -3,8 +3,8 @@
 def definitions(pd,scenario):
     # Define historical year and simulation years
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    history = [2010]
-    model_horizon = [2015, 2020, 2025]
+    history = [2020]
+    model_horizon = [2025, 2030, 2035]
     scenario.add_horizon(year=history + model_horizon, firstmodelyear=model_horizon[0])
 
     # Define country and subdivisions
@@ -64,10 +64,10 @@ def definitions(pd,scenario):
 def demand(pd,scenario,model_horizon,local):
     # Define demand (Mwa)
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    demand_gw_N  = [ 4.63,  5.52,  7.10]
-    demand_gw_NE = [ 9.20, 10.74, 12.33]
-    demand_gw_SW = [35.84, 38.62, 42.91]
-    demand_gw_S  = [10.21, 11.42, 12.95]
+    demand_gw_NE = [13.5, 14.4, 15.6]
+    demand_gw_N  = [ 8.0,  8.6,  9.3]
+    demand_gw_SW = [46.8, 49.9, 54.2]
+    demand_gw_S  = [14.2, 15.1, 16.4]
 
     if local == 'N':
         demand_gw = demand_gw_N
