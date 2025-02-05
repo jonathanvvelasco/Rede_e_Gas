@@ -113,109 +113,111 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
     # Describe the energy generation historic.
 
     # 1- Insert the participation fraction of each technology in the generation (base year).
-    historic_demand =  60.194 # -> Demand (GWa)
-    historic_demand_N = 3.67
-    historic_demand_NE = 7.61
-    historic_demand_SE = 31.78
-    historic_demand_S = 8.50
 
-    if local == 'N':
-        historic_demand = historic_demand_N
-    if local == 'NE':
-        historic_demand = historic_demand_NE
-    if local == 'SE/CW':
-        historic_demand = historic_demand_SE
-    if local == 'S':
-        historic_demand = historic_demand_S
-    historic_generation = historic_demand / grid_efficiency
-    large_hydroelectric_fraction = 0.73532
-    pch_fraction = 0.04153
-    national_coal_fraction = 0.01339
-    gn_fraction = 0.07709
-    biomass_fraction = 0.05899
-    wind_fraction = 0.03887
-    nuclear_fraction  = 0.02834
-    oil_fraction = 0.00645
+    #Demands
+    historic_demand_N = [4.4, 6.4, 7.5]
+    historic_demand_NE = [10.1, 12.4, 13.0]
+    historic_demand_SE = [44.0, 51.5, 51.2]
+    historic_demand_S = [13.5, 16.6, 18.2]
 
-    # 2- Define the generated energy values for each technology in the base year.
-    if local == 'N':
-        old_activity = {
-            "large_hydroelectric_" + local + "_ppl": 3.93,
-            "oil_" + local + "_ppl": 0,
-            "nuclear_g_" + local + "_ppl": 0,
-            "national_coal_" + local + "_ppl": 0,
-            "biomass_retrofit_" + local + "_ppl": 0,
-            "onshore_wind_" + local + "_ppl": 0,
-            "GN_open_cycle_" + local + "_ppl": 0,
-            "pch_" + local + "_ppl": 0.22,
-        }
-    
-    if local == 'NE':
-        old_activity = {
-            "large_hydroelectric_" + local + "_ppl":5.52,
-            "oil_" + local + "_ppl": 0.015,
-            "nuclear_g_" + local + "_ppl": 0,
-            "national_coal_" + local + "_ppl": 0.03,
-            "biomass_retrofit_" + local + "_ppl": 0.14,
-            "onshore_wind_" + local + "_ppl": 0.04,
-            "GN_open_cycle_" + local + "_ppl": 0.18,
-            "pch_" + local + "_ppl": 0.31,
-        }
-    
-    if local == 'SE/CW':
-        old_activity = {
-            "large_hydroelectric_" + local + "_ppl": 29.11,
-            "oil_" + local + "_ppl": 0.069,
-            "nuclear_g_" + local + "_ppl": 1.54,
-            "national_coal_" + local + "_ppl": 0.14,
-            "biomass_retrofit_" + local + "_ppl": 0.63,
-            "onshore_wind_" + local + "_ppl": 1.54,
-            "GN_open_cycle_" + local + "_ppl": 0.83,
-            "pch_" + local + "_ppl": 1.64,
-        }
-    
-    if local == 'S':
-        old_activity = {
-            "large_hydroelectric_" + local + "_ppl": 6.10,
-            "oil_" + local + "_ppl": 0.04,
-            "nuclear_g_" + local + "_ppl": 0,
-            "national_coal_" + local + "_ppl": 0.08,
-            "biomass_retrofit_" + local + "_ppl": 0.36,
-            "onshore_wind_" + local + "_ppl": 0.04,
-            "GN_open_cycle_" + local + "_ppl": 0.47,
-            "pch_" + local + "_ppl": 0.34,
-        }
+    #Activities
+    historic_act_N = [[4, 0.0013, 0, 0, 0, 0, 0, 0.23], [5, 0.2925, 0, 0.2785, 0.2042, 0, 1.2667, 0.2667], [7, 0.0013, 0, 0.1294, 0.2022, 0.176, 1.521, 0.4099]]
+    historic_act_NE = [[4.9, 0.0036, 0, 0, 0.0081, 0.124, 0.8024, 2.42], [3, 1.2889, 0, 0.9054, 0.1427, 2.0541, 1.382, 0.1600], [4, 0.1233, 0, 0.3185, 0.2924, 5.568, 0.7977, 0.2306]]
+    historic_act_SE = [[29.30, 0.3228, 1.658, 0, 0.3441, 0, 2.0201, 1.64], [24.379, 0.4217, 1.6903, 0.0021, 2.2254, 0.0087, 5.193, 1.3644], [28.85, 0.0607, 1.5998, 0.0047, 3.2374, 0.0062, 2.317, 1.6146]]
+    historic_act_S = [[8.2039557, 0, 0, 0, 0.0005, 0.0412, 0.1619, 0.459], [10.1951, 0.144, 0, 0.8668, 0.1348, 0.4376, 0.3921, 0.5706], [4.511, 0.1272, 0, 0.7941, 0.3533, 0.7382, 0.1562, 0.2524443]]
 
-    if (local == 'S') or (local == 'N'):
-        old_activity["nuclear_g_"+local+"_ppl"]=0
+    for j in range(len(history)):
 
-    # 3- Add values to the parameter "historical_activity"
-    for tec, val in old_activity.items():
-        df = make_df(
-            "historical_activity",
-            node_loc=local,
-            year_act=history,
-            mode="standard",
-            time="year",
-            unit="GWa",
-            technology=tec,
-            value=val,
-        )
-        scenario.add_par("historical_activity", df)
+        if local == 'N':
+            historic_demand = historic_demand_N[j]
+        if local == 'NE':
+            historic_demand = historic_demand_NE[j]
+        if local == 'SE/CW':
+            historic_demand = historic_demand_SE[j]
+        if local == 'S':
+            historic_demand = historic_demand_S[j]
 
-    # 4- Define the historical expansion as (1/10) of the installed capacity in the base year.
-    for tec in old_activity:
-        value = old_activity[tec] / (1 * 10 * capacity_factor[tec])
-        df = make_df(
-            "historical_new_capacity",
-            node_loc=local,
-            year_vtg=history,
-            unit="GW",
-            technology=tec,
-            value=value,
-        )
-        scenario.add_par("historical_new_capacity", df)
-    return scenario
+
+        # 2- Define the generated energy values for each technology in the base year.
+        
+        if local == 'N':
+            old_activity = {
+                "large_hydroelectric_" + local + "_ppl": historic_act_N[j][0],
+                "oil_" + local + "_ppl": historic_act_N[j][1],
+                "nuclear_g_" + local + "_ppl": historic_act_N[j][2],
+                "national_coal_" + local + "_ppl": historic_act_N[j][3],
+                "biomass_retrofit_" + local + "_ppl": historic_act_N[j][4],
+                "onshore_wind_" + local + "_ppl": historic_act_N[j][5],
+                "GN_open_cycle_" + local + "_ppl": historic_act_N[j][6],
+                "pch_" + local + "_ppl": historic_act_N[j][7],
+            }
+        
+        if local == 'NE':
+            old_activity = {
+                "large_hydroelectric_" + local + "_ppl": historic_act_NE[j][0],
+                "oil_" + local + "_ppl": historic_act_NE[j][1],
+                "nuclear_g_" + local + "_ppl": historic_act_NE[j][2],
+                "national_coal_" + local + "_ppl": historic_act_NE[j][3],
+                "biomass_retrofit_" + local + "_ppl": historic_act_NE[j][4],
+                "onshore_wind_" + local + "_ppl": historic_act_NE[j][5],
+                "GN_open_cycle_" + local + "_ppl": historic_act_NE[j][6],
+                "pch_" + local + "_ppl": historic_act_NE[j][7],
+            }
+        
+        if local == 'SE/CW':
+            old_activity = {
+                "large_hydroelectric_" + local + "_ppl": historic_act_SE[j][0],
+                "oil_" + local + "_ppl": historic_act_SE[j][1],
+                "nuclear_g_" + local + "_ppl": historic_act_SE[j][2],
+                "national_coal_" + local + "_ppl": historic_act_SE[j][3],
+                "biomass_retrofit_" + local + "_ppl": historic_act_SE[j][4],
+                "onshore_wind_" + local + "_ppl": historic_act_SE[j][5],
+                "GN_open_cycle_" + local + "_ppl": historic_act_SE[j][6],
+                "pch_" + local + "_ppl": historic_act_SE[j][7],
+            }
+        
+        if local == 'S':
+            old_activity = {
+                "large_hydroelectric_" + local + "_ppl": historic_act_S[j][0],
+                "oil_" + local + "_ppl": historic_act_S[j][1],
+                "nuclear_g_" + local + "_ppl": historic_act_S[j][2],
+                "national_coal_" + local + "_ppl": historic_act_S[j][3],
+                "biomass_retrofit_" + local + "_ppl": historic_act_S[j][4],
+                "onshore_wind_" + local + "_ppl": historic_act_S[j][5],
+                "GN_open_cycle_" + local + "_ppl": historic_act_S[j][6],
+                "pch_" + local + "_ppl": historic_act_S[j][7],
+            }
+
+        if (local == 'S') or (local == 'N'):
+            old_activity["nuclear_g_"+local+"_ppl"]=0
+
+        # 3- Add values to the parameter "historical_activity"
+        for tec, val in old_activity.items():
+            df = make_df(
+                "historical_activity",
+                node_loc=local,
+                year_act=history,
+                mode="standard",
+                time="year",
+                unit="GWa",
+                technology=tec,
+                value=val,
+            )
+            scenario.add_par("historical_activity", df)
+
+        # 4- Define the historical expansion as (1/10) of the installed capacity in the base year.
+        for tec in old_activity:
+            value = old_activity[tec] / (1 * 10 * capacity_factor[tec])
+            df = make_df(
+                "historical_new_capacity",
+                node_loc=local,
+                year_vtg=history,
+                unit="GW",
+                technology=tec,
+                value=value,
+            )
+            scenario.add_par("historical_new_capacity", df)
+        return scenario
 
 
 def inv_costs(make_df,scenario,local,model_horizon):

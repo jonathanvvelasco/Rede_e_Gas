@@ -3,7 +3,7 @@
 def definitions(pd,scenario):
     # Define historical year and simulation years
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    history = [2020]
+    history = [2010, 2015, 2020]
     model_horizon = [2025, 2030, 2035]
     scenario.add_horizon(year=history + model_horizon, firstmodelyear=model_horizon[0])
 
