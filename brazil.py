@@ -16,8 +16,9 @@ import outputs
 
 
 mp = ixmp.Platform()
-mp.add_unit("USD/MWh")
-mp.add_unit("USD/kW-a")
+mp.add_unit("mi USD/GW")
+mp.add_unit("mi USD/GW-a")
+mp.add_unit("mi USD/GWa")
 
 
 scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baseline", version="new")

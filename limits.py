@@ -9,7 +9,7 @@ def expansion_up(make_df,scenario,local):
     base_capacity = {
         'node_loc': local,
         'year_vtg': [2025, 2030, 2035],
-        'unit': 'MW',
+        'unit': 'GW',
     }
 
     for tec, val in capacity.items():
