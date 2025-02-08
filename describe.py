@@ -121,18 +121,19 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
     historic_demand_S  = [ 8.812, 10.937, 11.664]
 
     #Generation historical activity (GWa)
-    historic_act_N  = [[4,      0.0013, 0,      0,      0,      0,      0,      0.23    ],
-                       [5,      0.2925, 0,      0.2785, 0.2042, 0,      1.2667, 0.2667  ], 
-                       [7,      0.0013, 0,      0.1294, 0.2022, 0.176,  1.521,  0.4099  ]]
-    historic_act_NE = [[4.9,    0.0036, 0,      0,      0.0081, 0.124,  0.8024, 2.42    ],
-                       [3,      1.2889, 0,      0.9054, 0.1427, 2.0541, 1.382,  0.1600  ],
-                       [4,      0.1233, 0,      0.3185, 0.2924, 5.568,  0.7977, 0.2306  ]]
-    historic_act_SW = [[29.30,  0.3228, 1.658,  0,      0.3441, 0,      2.0201, 1.64    ],
-                       [24.379, 0.4217, 1.6903, 0.0021, 2.2254, 0.0087, 5.193,  1.3644  ],
-                       [28.85,  0.0607, 1.5998, 0.0047, 3.2374, 0.0062, 2.317,  1.6146  ]]
-    historic_act_S  = [[8.2040, 0,      0,      0,      0.0005, 0.0412, 0.1619, 0.459   ],
-                       [10.1951,0.144,  0,      0.8668, 0.1348, 0.4376, 0.3921, 0.5706  ],
-                       [4.511,  0.1272, 0,      0.7941, 0.3533, 0.7382, 0.1562, 0.252444]]
+                    #hydro      #oil   #nuclear #coal  #biomass #wind    #gas    #pch   #PV
+    historic_act_N  = [[4,      0.0013, 0,      0,      0,      0,      0,      0.23,   0.5       ],
+                       [5,      0.2925, 0,      0.2785, 0.2042, 0,      1.2667, 0.2667, 0       ], 
+                       [7,      0.0013, 0,      0.1294, 0.2022, 0.176,  1.521,  0.4099, 0.0011  ]]
+    historic_act_NE = [[4.9,    0.0036, 0,      0,      0.0081, 0.124,  0.8024, 2.42,   0       ],
+                       [3,      1.2889, 0,      0.9054, 0.1427, 2.0541, 1.382,  0.1600, 0.0016  ],
+                       [4,      0.1233, 0,      0.3185, 0.2924, 5.568,  0.7977, 0.2306, 0.4562  ]]
+    historic_act_SW = [[29.30,  0.3228, 1.658,  0,      0.3441, 0,      2.0201, 1.64,   0       ],
+                       [24.379, 0.4217, 1.6903, 0.0021, 2.2254, 0.0087, 5.193,  1.3644, 0.00004 ],
+                       [28.85,  0.0607, 1.5998, 0.0047, 3.2374, 0.0062, 2.317,  1.6146, 0.0008  ]]
+    historic_act_S  = [[8.2040, 0,      0,      0,      0.0005, 0.0412, 0.1619, 0.459,  0       ],
+                       [10.1951,0.144,  0,      0.8668, 0.1348, 0.4376, 0.3921, 0.5706, 0.00004 ],
+                       [4.511,  0.1272, 0,      0.7941, 0.3533, 0.7382, 0.1562, 0.25244,0.2204  ]]
 
     for j in range(len(history)):
 
@@ -149,6 +150,7 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 "onshore_wind_" + local + "_ppl": historic_act_N[j][5],
                 "GN_open_cycle_" + local + "_ppl": historic_act_N[j][6],
                 "pch_" + local + "_ppl": historic_act_N[j][7],
+                "solar_photovoltaic_" + local + "_ppl": historic_act_N[j][8],
                 "bulb_" + local: historic_demand_N[j],
             }
         
@@ -162,6 +164,7 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 "onshore_wind_" + local + "_ppl": historic_act_NE[j][5],
                 "GN_open_cycle_" + local + "_ppl": historic_act_NE[j][6],
                 "pch_" + local + "_ppl": historic_act_NE[j][7],
+                "solar_photovoltaic_" + local + "_ppl": historic_act_NE[j][8],
                 "bulb_" + local: historic_demand_NE[j],
             }
         
@@ -175,6 +178,7 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 "onshore_wind_" + local + "_ppl": historic_act_SW[j][5],
                 "GN_open_cycle_" + local + "_ppl": historic_act_SW[j][6],
                 "pch_" + local + "_ppl": historic_act_SW[j][7],
+                "solar_photovoltaic_" + local + "_ppl": historic_act_SW[j][8],
                 "bulb_" + local: historic_demand_SW[j],
             }
         
@@ -188,11 +192,9 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 "onshore_wind_" + local + "_ppl": historic_act_S[j][5],
                 "GN_open_cycle_" + local + "_ppl": historic_act_S[j][6],
                 "pch_" + local + "_ppl": historic_act_S[j][7],
+                "solar_photovoltaic_" + local + "_ppl": historic_act_S[j][8],
                 "bulb_" + local: historic_demand_S[j],
             }
-
-        if (local == 'S') or (local == 'N'):
-            old_activity["nuclear_g_"+local+"_ppl"]=0
 
         # 3- Add values to the parameter "historical_activity"
         for tec, val in old_activity.items():

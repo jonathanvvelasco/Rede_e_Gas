@@ -52,8 +52,8 @@ scenario = connect.transmission_SE_N(make_df,scenario)
 scenario.solve()
 
 
-outputs.generate_excel(pd,scenario)
-outputs.validation_table(pd)
+#outputs.generate_excel(pd,scenario)
+#outputs.validation_table(pd)
 
 ##tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
