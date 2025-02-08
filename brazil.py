@@ -16,8 +16,9 @@ import outputs
 
 
 mp = ixmp.Platform()
-mp.add_unit("USD/MWh")
-mp.add_unit("USD/kW-a")
+mp.add_unit("mi USD/GW")
+mp.add_unit("mi USD/GW-a")
+mp.add_unit("mi USD/GWa")
 
 
 scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baseline", version="new")
@@ -51,8 +52,8 @@ scenario = connect.transmission_SE_N(make_df,scenario)
 scenario.solve()
 
 
-outputs.generate_excel(pd,scenario)
-outputs.validation_table(pd)
+#outputs.generate_excel(pd,scenario)
+#outputs.validation_table(pd)
 
 ##tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 

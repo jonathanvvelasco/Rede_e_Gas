@@ -303,14 +303,14 @@ def technologies(scenario,base_input,base_output,local):
     scenario.add_par("output", biogas_out)
 
     # Solar Fotovoltaic Generation ( ... -> Secondary)
-    solar_fotovoltaic_out = base_output.assign(
-        technology="solar_fotovoltaic_" + local + "_ppl",
+    solar_photovoltaic_out = base_output.assign(
+        technology="solar_photovoltaic_" + local + "_ppl",
         commodity="electricity",
         level="secondary",
         value=1.0,
         unit="GWa",
     )
-    scenario.add_par("output", solar_fotovoltaic_out)
+    scenario.add_par("output", solar_photovoltaic_out)
 
     # Solar CSP Generation ( ... -> Secondary)
     solar_csp_out = base_output.assign(

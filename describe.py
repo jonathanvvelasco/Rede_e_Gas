@@ -8,7 +8,7 @@ def capacity__factor(make_df,scenario,local,vintage_years, act_years):
         "pch_" + local + "_ppl": 0.5,
         "nuclear_g_" + local + "_ppl":0.85,
         "biogas_" + local + "_ppl":0.5,
-        "solar_fotovoltaic_" + local + "_ppl":0.4,
+        "solar_photovoltaic_" + local + "_ppl":0.4,
         "solar_csp_" + local + "_ppl":0.2,
         "onshore_wind_" + local + "_ppl":0.3,
         "offshore_wind_" + local + "_ppl":0.3,
@@ -46,7 +46,7 @@ def life_time(make_df,scenario,local,model_horizon):
     "pch_" + local + "_ppl": 20,
     "nuclear_g_" + local + "_ppl":20,
     "biogas_" + local + "_ppl":20,
-    "solar_fotovoltaic_" + local + "_ppl":20,
+    "solar_photovoltaic_" + local + "_ppl":20,
     "solar_csp_" + local + "_ppl":20,
     "onshore_wind_" + local + "_ppl":20,
     "offshore_wind_" + local + "_ppl":20,
@@ -81,7 +81,7 @@ def growth__tecnologies(make_df,scenario,local,model_horizon):
         "pch_" + local + "_ppl", # "pch_NE_ppl"
         "nuclear_g_" + local + "_ppl",
         "biogas_" + local + "_ppl",
-        "solar_fotovoltaic_" + local + "_ppl",
+        "solar_photovoltaic_" + local + "_ppl",
         "solar_csp_" + local + "_ppl",
         "onshore_wind_" + local + "_ppl",
         "offshore_wind_" + local + "_ppl",
@@ -114,25 +114,26 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
 
     # 1- Insert the participation fraction of each technology in the generation (base year).
 
-    #Demands
-    historic_demand_N = [4.4, 6.4, 7.5]
-    historic_demand_NE = [10.1, 12.4, 13.0]
-    historic_demand_SE = [44.0, 51.5, 51.2]
-    historic_demand_S = [13.5, 16.6, 18.2]
+    #Historical Demand for electricity (GWa)
+    historic_demand_N  = [ 3.848,  5.363,  5.603]
+    historic_demand_NE = [ 8.141, 10.261, 10.851]
+    historic_demand_SW = [33.421, 38.064, 38.720]
+    historic_demand_S  = [ 8.812, 10.937, 11.664]
 
-    #Activities
-    historic_act_N = [[4, 0.0013, 0, 0, 0, 0, 0, 0.23],
-                      [5, 0.2925, 0, 0.2785, 0.2042, 0, 1.2667, 0.2667], 
-                      [7, 0.0013, 0, 0.1294, 0.2022, 0.176, 1.521, 0.4099]]
-    historic_act_NE = [[4.9, 0.0036, 0, 0, 0.0081, 0.124, 0.8024, 2.42],
-                       [3, 1.2889, 0, 0.9054, 0.1427, 2.0541, 1.382, 0.1600],
-                       [4, 0.1233, 0, 0.3185, 0.2924, 5.568, 0.7977, 0.2306]]
-    historic_act_SE = [[29.30, 0.3228, 1.658, 0, 0.3441, 0, 2.0201, 1.64],
-                       [24.379, 0.4217, 1.6903, 0.0021, 2.2254, 0.0087, 5.193, 1.3644],
-                       [28.85, 0.0607, 1.5998, 0.0047, 3.2374, 0.0062, 2.317, 1.6146]]
-    historic_act_S = [[8.2039557, 0, 0, 0, 0.0005, 0.0412, 0.1619, 0.459],
-                      [10.1951, 0.144, 0, 0.8668, 0.1348, 0.4376, 0.3921, 0.5706],
-                      [4.511, 0.1272, 0, 0.7941, 0.3533, 0.7382, 0.1562, 0.2524443]]
+    #Generation historical activity (GWa)
+                    #hydro      #oil   #nuclear #coal  #biomass #wind    #gas    #pch   #PV
+    historic_act_N  = [[4,      0.0013, 0,      0,      0,      0,      0,      0.23,   0       ],
+                       [5,      0.2925, 0,      0.2785, 0.2042, 0,      1.2667, 0.2667, 0       ], 
+                       [7,      0.0013, 0,      0.1294, 0.2022, 0.176,  1.521,  0.4099, 0.0011  ]]
+    historic_act_NE = [[4.9,    0.0036, 0,      0,      0.0081, 0.124,  0.8024, 2.42,   0       ],
+                       [3,      1.2889, 0,      0.9054, 0.1427, 2.0541, 1.382,  0.1600, 0.0016  ],
+                       [4,      0.1233, 0,      0.3185, 0.2924, 5.568,  0.7977, 0.2306, 0.4562  ]]
+    historic_act_SW = [[29.30,  0.3228, 1.658,  0,      0.3441, 0,      2.0201, 1.64,   0       ],
+                       [24.379, 0.4217, 1.6903, 0.0021, 2.2254, 0.0087, 5.193,  1.3644, 0.00004 ],
+                       [28.85,  0.0607, 1.5998, 0.0047, 3.2374, 0.0062, 2.317,  1.6146, 0.0008  ]]
+    historic_act_S  = [[8.2040, 0,      0,      0,      0.0005, 0.0412, 0.1619, 0.459,  0       ],
+                       [10.1951,0.144,  0,      0.8668, 0.1348, 0.4376, 0.3921, 0.5706, 0.00004 ],
+                       [4.511,  0.1272, 0,      0.7941, 0.3533, 0.7382, 0.1562, 0.25244,0.2204  ]]
 
     for j in range(len(history)):
 
@@ -149,6 +150,8 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 "onshore_wind_" + local + "_ppl": historic_act_N[j][5],
                 "GN_open_cycle_" + local + "_ppl": historic_act_N[j][6],
                 "pch_" + local + "_ppl": historic_act_N[j][7],
+                "solar_photovoltaic_" + local + "_ppl": historic_act_N[j][8],
+                "bulb_" + local: historic_demand_N[j],
             }
         
         if local == 'NE':
@@ -161,18 +164,22 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 "onshore_wind_" + local + "_ppl": historic_act_NE[j][5],
                 "GN_open_cycle_" + local + "_ppl": historic_act_NE[j][6],
                 "pch_" + local + "_ppl": historic_act_NE[j][7],
+                "solar_photovoltaic_" + local + "_ppl": historic_act_NE[j][8],
+                "bulb_" + local: historic_demand_NE[j],
             }
         
         if local == 'SE/CW':
             old_activity = {
-                "large_hydroelectric_" + local + "_ppl": historic_act_SE[j][0],
-                "oil_" + local + "_ppl": historic_act_SE[j][1],
-                "nuclear_g_" + local + "_ppl": historic_act_SE[j][2],
-                "national_coal_" + local + "_ppl": historic_act_SE[j][3],
-                "biomass_retrofit_" + local + "_ppl": historic_act_SE[j][4],
-                "onshore_wind_" + local + "_ppl": historic_act_SE[j][5],
-                "GN_open_cycle_" + local + "_ppl": historic_act_SE[j][6],
-                "pch_" + local + "_ppl": historic_act_SE[j][7],
+                "large_hydroelectric_" + local + "_ppl": historic_act_SW[j][0],
+                "oil_" + local + "_ppl": historic_act_SW[j][1],
+                "nuclear_g_" + local + "_ppl": historic_act_SW[j][2],
+                "national_coal_" + local + "_ppl": historic_act_SW[j][3],
+                "biomass_retrofit_" + local + "_ppl": historic_act_SW[j][4],
+                "onshore_wind_" + local + "_ppl": historic_act_SW[j][5],
+                "GN_open_cycle_" + local + "_ppl": historic_act_SW[j][6],
+                "pch_" + local + "_ppl": historic_act_SW[j][7],
+                "solar_photovoltaic_" + local + "_ppl": historic_act_SW[j][8],
+                "bulb_" + local: historic_demand_SW[j],
             }
         
         if local == 'S':
@@ -185,17 +192,16 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 "onshore_wind_" + local + "_ppl": historic_act_S[j][5],
                 "GN_open_cycle_" + local + "_ppl": historic_act_S[j][6],
                 "pch_" + local + "_ppl": historic_act_S[j][7],
+                "solar_photovoltaic_" + local + "_ppl": historic_act_S[j][8],
+                "bulb_" + local: historic_demand_S[j],
             }
-
-        if (local == 'S') or (local == 'N'):
-            old_activity["nuclear_g_"+local+"_ppl"]=0
 
         # 3- Add values to the parameter "historical_activity"
         for tec, val in old_activity.items():
             df = make_df(
                 "historical_activity",
                 node_loc=local,
-                year_act=history,
+                year_act=history[j],
                 mode="standard",
                 time="year",
                 unit="GWa",
@@ -216,7 +222,7 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 value=value,
             )
             scenario.add_par("historical_new_capacity", df)
-        return scenario
+    return scenario
 
 
 def inv_costs(make_df,scenario,local,model_horizon):
@@ -228,7 +234,7 @@ def inv_costs(make_df,scenario,local,model_horizon):
         "pch_" + local + "_ppl": 2600,
         "nuclear_g_" + local + "_ppl":3500,
         "biogas_" + local + "_ppl":2400,
-        "solar_fotovoltaic_" + local + "_ppl":5900,
+        "solar_photovoltaic_" + local + "_ppl":5900,
         "solar_csp_" + local + "_ppl":4800,
         "onshore_wind_" + local + "_ppl":2500,
         "offshore_wind_" + local + "_ppl":3500,
@@ -249,7 +255,7 @@ def inv_costs(make_df,scenario,local,model_horizon):
             "inv_cost",
             node_loc=local,
             year_vtg=model_horizon,
-            unit="USD/kW",
+            unit="mi USD/GW",
             technology=tec,
             value=val,
         )
@@ -266,7 +272,7 @@ def fix_costs(make_df,scenario,local,vintage_years, act_years):
         "pch_" + local + "_ppl": 29,
         "nuclear_g_" + local + "_ppl":92,
         "biogas_" + local + "_ppl":169,
-        "solar_fotovoltaic_" + local + "_ppl":12,
+        "solar_photovoltaic_" + local + "_ppl":12,
         "solar_csp_" + local + "_ppl":58,
         "onshore_wind_" + local + "_ppl":31,
         "offshore_wind_" + local + "_ppl":87,
@@ -288,7 +294,7 @@ def fix_costs(make_df,scenario,local,vintage_years, act_years):
             node_loc=local,
             year_vtg=vintage_years,
             year_act=act_years,
-            unit="USD/kW-a",
+            unit="mi USD/GW-a",
             technology=tec,
             value=val,
         )
@@ -299,7 +305,7 @@ def fix_costs(make_df,scenario,local,vintage_years, act_years):
 def var_costs(make_df,scenario,local,vintage_years, act_years):
     # Describe the variable costs of the technologies.
 
-    # Define variable costs (O&M cost + fuel cost)
+    # Define variable costs (O&M cost + fuel cost) inserted in USD/MWh
     costs = {
         "biogas_" + local + "_ppl": 4.0,
         "nuclear_g_" + local + "_ppl":5.7 + 16,
@@ -313,6 +319,7 @@ def var_costs(make_df,scenario,local,vintage_years, act_years):
 
 
     # Add values to the parameter "var_cost"
+    convertion_factor = 8760/1000 #convert USD/MWh to mi_USD/GWa
     for tec, val in costs.items():
         df = make_df(
             "var_cost",
@@ -321,9 +328,9 @@ def var_costs(make_df,scenario,local,vintage_years, act_years):
             year_act=act_years,
             mode="standard",
             time="year",
-            unit="USD/MWh",
+            unit="mi USD/GWa",
             technology=tec,
-            value=val,
+            value=val*convertion_factor,
         )
         scenario.add_par("var_cost", df)
     return scenario
