@@ -231,21 +231,21 @@ def inv_costs(make_df,scenario,local,model_horizon):
     # Define the investment costs
     costs = {
         "oil_" + local + "_ppl": 10000,
-        "pch_" + local + "_ppl": 2600,
-        "nuclear_g_" + local + "_ppl":3500,
-        "biogas_" + local + "_ppl":2400,
-        "solar_photovoltaic_" + local + "_ppl":5900,
-        "solar_csp_" + local + "_ppl":4800,
-        "onshore_wind_" + local + "_ppl":2500,
-        "offshore_wind_" + local + "_ppl":3500,
-        "biomass_retrofit_" + local + "_ppl":1500,
-        "biomass_greenfield_" + local + "_ppl":1900,
-        "GN_open_cycle_" + local + "_ppl":850,
-        "GN_combined_cycle_" + local + "_ppl":1200,
+        "pch_" + local + "_ppl": 1352,
+        "nuclear_g_" + local + "_ppl":5000,
+        "biogas_" + local + "_ppl":1200,
+        "solar_photovoltaic_" + local + "_ppl":1100,
+        "solar_csp_" + local + "_ppl":1100,
+        "onshore_wind_" + local + "_ppl":1100,
+        "offshore_wind_" + local + "_ppl":1100,
+        "biomass_retrofit_" + local + "_ppl":1200,
+        "biomass_greenfield_" + local + "_ppl":1200,
+        "GN_open_cycle_" + local + "_ppl":900,
+        "GN_combined_cycle_" + local + "_ppl":1000,
         "national_coal_" + local + "_ppl":2100,
         "imported_coal_" + local + "_ppl":2100,
-        "large_hydroelectric_" + local + "_ppl":1800,
-        "medium_hydroelectric_" + local + "_ppl":2100,
+        "large_hydroelectric_" + local + "_ppl":1352,
+        "medium_hydroelectric_" + local + "_ppl":1352,
         "bulb_" + local: 1,
     }
 
@@ -268,22 +268,22 @@ def fix_costs(make_df,scenario,local,vintage_years, act_years):
 
     # Define fix costs
     costs = {
-        "oil_" + local + "_ppl": 20,
-        "pch_" + local + "_ppl": 29,
-        "nuclear_g_" + local + "_ppl":92,
-        "biogas_" + local + "_ppl":169,
-        "solar_photovoltaic_" + local + "_ppl":12,
-        "solar_csp_" + local + "_ppl":58,
-        "onshore_wind_" + local + "_ppl":31,
-        "offshore_wind_" + local + "_ppl":87,
-        "biomass_retrofit_" + local + "_ppl":10,
-        "biomass_greenfield_" + local + "_ppl":65,
-        "GN_open_cycle_" + local + "_ppl":12,
-        "GN_combined_cycle_" + local + "_ppl":18,
-        "national_coal_" + local + "_ppl":28,
-        "imported_coal_" + local + "_ppl":28,
-        "large_hydroelectric_" + local + "_ppl":29,
-        "medium_hydroelectric_" + local + "_ppl":29,
+        "oil_" + local + "_ppl": 12.8,
+        "pch_" + local + "_ppl": 12.8,
+        "nuclear_g_" + local + "_ppl": 83.3,
+        "biogas_" + local + "_ppl": 30.8,
+        "solar_photovoltaic_" + local + "_ppl": 16.7,
+        "solar_csp_" + local + "_ppl": 16.7,
+        "onshore_wind_" + local + "_ppl": 25.6,
+        "offshore_wind_" + local + "_ppl": 25.6,
+        "biomass_retrofit_" + local + "_ppl": 30.8,
+        "biomass_greenfield_" + local + "_ppl": 30.8,
+        "GN_open_cycle_" + local + "_ppl": 43.6,
+        "GN_combined_cycle_" + local + "_ppl": 43.6,
+        "national_coal_" + local + "_ppl": 89.7,
+        "imported_coal_" + local + "_ppl": 89.7,
+        "large_hydroelectric_" + local + "_ppl": 12.8,
+        "medium_hydroelectric_" + local + "_ppl": 12.8,
         "bulb_" + local: 1,
     }
 
@@ -307,19 +307,19 @@ def var_costs(make_df,scenario,local,vintage_years, act_years):
 
     # Define variable costs (O&M cost + fuel cost) inserted in USD/MWh
     costs = {
-        "biogas_" + local + "_ppl": 4.0,
-        "nuclear_g_" + local + "_ppl":5.7 + 16,
-        "national_coal_" + local + "_ppl":4.7 + 36.62,
-        "imported_coal_" + local + "_ppl":7.0 + 19.12,
-        "GN_open_cycle_" + local + "_ppl":4.0 + 75.60,
-        "GN_combined_cycle_" + local + "_ppl":2.3 + 61.60,
-        "biomass_retrofit_" + local + "_ppl":14.0,
-        "biomass_greenfield_" + local + "_ppl":7.0,
+        "biogas_" + local + "_ppl": 0,
+        "nuclear_g_" + local + "_ppl":53.3,
+        "national_coal_" + local + "_ppl": 298.7,
+        "imported_coal_" + local + "_ppl": 298.7,
+        "GN_open_cycle_" + local + "_ppl": 219.8,
+        "GN_combined_cycle_" + local + "_ppl": 329.8,
+        "biomass_retrofit_" + local + "_ppl": 14.0,
+        "biomass_greenfield_" + local + "_ppl": 7.0,
     }
 
 
     # Add values to the parameter "var_cost"
-    convertion_factor = 8760/1000 #convert USD/MWh to mi_USD/GWa
+    convertion_factor = 1 #8760/1000 #convert USD/MWh to mi_USD/GWa
     for tec, val in costs.items():
         df = make_df(
             "var_cost",
