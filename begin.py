@@ -77,7 +77,6 @@ def demand(pd,scenario,model_horizon,local):
         demand_gw = demand_gw_SW
     if local == 'S':
         demand_gw = demand_gw_S
-    # demand_mw = [valor * 1000 for valor in demand_gw]
     demanda = pd.Series(demand_gw, index=pd.Index(model_horizon, name="Time"))
     electric_demand = pd.DataFrame(
         {
@@ -87,7 +86,7 @@ def demand(pd,scenario,model_horizon,local):
             "year": model_horizon,
             "time": "year",
             "value": demanda,
-            "unit": "MWa",
+            "unit": "GWa",
         }
     )
     scenario.add_par("demand", electric_demand)

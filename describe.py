@@ -303,7 +303,7 @@ def fix_costs(make_df,scenario,local,vintage_years, act_years):
 def var_costs(make_df,scenario,local,vintage_years, act_years):
     # Describe the variable costs of the technologies.
 
-    # Define variable costs (O&M cost + fuel cost)
+    # Define variable costs (O&M cost + fuel cost) inserted in USD/MWh
     costs = {
         "biogas_" + local + "_ppl": 4.0,
         "nuclear_g_" + local + "_ppl":5.7 + 16,
@@ -317,6 +317,7 @@ def var_costs(make_df,scenario,local,vintage_years, act_years):
 
 
     # Add values to the parameter "var_cost"
+    convertion_factor = 8760/1000 #convert USD/MWh to mi_USD/GWa
     for tec, val in costs.items():
         df = make_df(
             "var_cost",
@@ -327,7 +328,7 @@ def var_costs(make_df,scenario,local,vintage_years, act_years):
             time="year",
             unit="mi USD/GWa",
             technology=tec,
-            value=val,
+            value=val*convertion_factor,
         )
         scenario.add_par("var_cost", df)
     return scenario

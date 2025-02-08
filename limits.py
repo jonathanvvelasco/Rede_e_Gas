@@ -3,7 +3,7 @@
 def expansion_up(make_df,scenario,local):
     # Define the maximum limit of technologies expansion
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    capacity = {"biomass_retrofit_" + local + "_ppl": 2,
+    capacity = {"biomass_retrofit_" + local + "_ppl": 0.5,
         }
 
     base_capacity = {
