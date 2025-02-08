@@ -122,7 +122,7 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
 
     #Generation historical activity (GWa)
                     #hydro      #oil   #nuclear #coal  #biomass #wind    #gas    #pch   #PV
-    historic_act_N  = [[4,      0.0013, 0,      0,      0,      0,      0,      0.23,   0.5       ],
+    historic_act_N  = [[4,      0.0013, 0,      0,      0,      0,      0,      0.23,   0       ],
                        [5,      0.2925, 0,      0.2785, 0.2042, 0,      1.2667, 0.2667, 0       ], 
                        [7,      0.0013, 0,      0.1294, 0.2022, 0.176,  1.521,  0.4099, 0.0011  ]]
     historic_act_NE = [[4.9,    0.0036, 0,      0,      0.0081, 0.124,  0.8024, 2.42,   0       ],
@@ -201,7 +201,7 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
             df = make_df(
                 "historical_activity",
                 node_loc=local,
-                year_act=history,
+                year_act=history[j],
                 mode="standard",
                 time="year",
                 unit="GWa",
@@ -222,7 +222,7 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 value=value,
             )
             scenario.add_par("historical_new_capacity", df)
-        return scenario
+    return scenario
 
 
 def inv_costs(make_df,scenario,local,model_horizon):
