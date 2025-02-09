@@ -16,7 +16,7 @@ def generate_excel(pd,scenario):
     return None
 
 
-def validation_table(pd):
+def validation_table(pd, scenario):
     ###Demand and supply table###
 
 
@@ -381,6 +381,11 @@ def validation_table(pd):
     values_s = pd.DataFrame(values_s)
 
     print(values_s)
+
+    #creating the excel with the historical years
+    d = pd.DataFrame(scenario.var("ACT"))
+    d.to_excel("Activity.xlsx")
+    
 
     ###################
 

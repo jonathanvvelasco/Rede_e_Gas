@@ -52,10 +52,15 @@ scenario = connect.transmission_SE_N(make_df,scenario)
 scenario.solve()
 
 
+<<<<<<< Updated upstream
 #outputs.generate_excel(pd,scenario)
 #outputs.validation_table(pd)
+=======
+outputs.generate_excel(pd,scenario)
+outputs.validation_table(pd, scenario)
+>>>>>>> Stashed changes
 
-##tk.messagebox.showinfo("Notification", "The code has been successfully run!")
+#tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
 
 mp.close_db()
