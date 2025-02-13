@@ -222,7 +222,8 @@ def historic__generation(make_df,scenario,grid_efficiency,local,history,capacity
                 value=value,
             )
             scenario.add_par("historical_new_capacity", df)
-    return scenario
+
+    return scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW
 
 
 def inv_costs(make_df,scenario,local,model_horizon):

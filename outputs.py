@@ -16,7 +16,7 @@ def generate_excel(pd,scenario):
     return None
 
 
-def validation_table(pd, scenario):
+def validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW):
     ###Demand and supply table###
 
 

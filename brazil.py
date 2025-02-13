@@ -52,13 +52,13 @@ scenario = connect.transmission_SE_N(make_df,scenario)
 scenario.solve()
 
 
-<<<<<<< Updated upstream
+#<<<<<<< Updated upstream
 #outputs.generate_excel(pd,scenario)
 #outputs.validation_table(pd)
-=======
+#####################################
 outputs.generate_excel(pd,scenario)
-outputs.validation_table(pd, scenario)
->>>>>>> Stashed changes
+outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW)
+#>>>>>>> Stashed changes
 
 #tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
