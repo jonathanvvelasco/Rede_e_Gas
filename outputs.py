@@ -111,15 +111,16 @@ def validation_table(pd, scenario, historic_demand_N, historic_demand_NE, histor
     values_n = {"North (values in GWa)": ["Years", "North Generation", "North Demand", "Difference", "Role", "Transmission leaves N", "Transmission joins N", "N total transmission", "Error (difference - transmission)", "Validated?"]}
     for p in range(len(demand_north)):
         if p < len(historic_demand_N):
-            values_n[p] = [history[p], act_north[p], demand_north[p], act_north[p]-demand_north[p], roles_n[p], transmission_north_out[p], transmission_north_in[p], transmission_north_out[p] - transmission_north_in[p], (((transmission_north_out[p]-transmission_north_in[p]) - (act_north[p] - demand_north[p]))), answers_n[p]]
+            values_n[p] = [history[p], act_north[p], demand_north[p], act_north[p]-demand_north[p], roles_n[p], "-", "-", "-", "-", "-"]
         else:
             values_n[p] = [model_horizon[p-len(history)], act_north[p], demand_north[p], act_north[p]-demand_north[p], roles_n[p], transmission_north_out[p], transmission_north_in[p], transmission_north_out[p] - transmission_north_in[p], (((transmission_north_out[p]-transmission_north_in[p]) - (act_north[p] - demand_north[p]))), answers_n[p]]
 
 
 
     values_n = pd.DataFrame(values_n)
-    values_n = values_n.to_string(index=False)
-
+    values_n = values_n.to_string(index=False, header=False)
+    
+    print("                       North")
     print(values_n)
     print("")
 
@@ -221,13 +222,14 @@ def validation_table(pd, scenario, historic_demand_N, historic_demand_NE, histor
 
     for p in range(len(demand_northeast)):
         if p < len(historic_demand_N):
-            values_ne[p] = [history[p], act_northeast[p], demand_northeast[p], act_northeast[p]-demand_northeast[p], roles_ne[p], transmission_northeast_out[p], transmission_northeast_in[p], transmission_northeast_out[p] - transmission_northeast_in[p], (((transmission_northeast_out[p]-transmission_northeast_in[p]) - (act_northeast[p] - demand_northeast[p]))), answers_ne[p]]
+            values_ne[p] = [history[p], act_northeast[p], demand_northeast[p], act_northeast[p]-demand_northeast[p], roles_ne[p], "-", "-", "-", "-", "-"]
         else:
             values_ne[p] = [model_horizon[p-len(history)], act_northeast[p], demand_northeast[p], act_northeast[p]-demand_northeast[p], roles_ne[p], transmission_northeast_out[p], transmission_northeast_in[p], transmission_northeast_out[p] - transmission_northeast_in[p], (((transmission_northeast_out[p]-transmission_northeast_in[p]) - (act_northeast[p] - demand_northeast[p]))), answers_ne[p]]
             
     values_ne = pd.DataFrame(values_ne)
-    values_ne = values_ne.to_string(index=False)
-
+    values_ne = values_ne.to_string(index=False, header=False)
+    
+    print("                   Northeast")
     print(values_ne)
     print("")
 
@@ -327,13 +329,14 @@ def validation_table(pd, scenario, historic_demand_N, historic_demand_NE, histor
 
     for p in range(len(demand_southeast)):
         if p < len(historic_demand_SW):
-            values_se[p] = [history[p], act_southeast[p], demand_southeast[p], act_southeast[p]-demand_southeast[p], roles_se[p], transmission_southeast_out[p], transmission_southeast_in[p], transmission_southeast_out[p] - transmission_southeast_in[p], (((transmission_southeast_out[p]-transmission_southeast_in[p]) - (act_southeast[p] - demand_southeast[p]))), answers_se[p]]
+            values_se[p] = [history[p], act_southeast[p], demand_southeast[p], act_southeast[p]-demand_southeast[p], roles_se[p], "-", "-", "-", "-", "-"]
         else:
             values_se[p] = [model_horizon[p-len(history)], act_southeast[p], demand_southeast[p], act_southeast[p]-demand_southeast[p], roles_se[p], transmission_southeast_out[p], transmission_southeast_in[p], transmission_southeast_out[p] - transmission_southeast_in[p], (((transmission_southeast_out[p]-transmission_southeast_in[p]) - (act_southeast[p] - demand_southeast[p]))), answers_se[p]]
 
     values_se = pd.DataFrame(values_se)
-    values_se = values_se.to_string(index=False)
-
+    values_se = values_se.to_string(index=False, header=False)
+    
+    print("                   Southeast")
     print(values_se)
     print("")
 
@@ -426,13 +429,14 @@ def validation_table(pd, scenario, historic_demand_N, historic_demand_NE, histor
 
     for p in range(len(demand_south)):
         if p < len(historic_demand_S):
-            values_s[p] = [history[p], act_south[p], demand_south[p], act_south[p]-demand_south[p], roles_s[p], transmission_south_out[p], transmission_south_in[p], transmission_south_out[p] - transmission_south_in[p], (((transmission_south_out[p]-transmission_south_in[p]) - (act_south[p] - demand_south[p]))), answers_s[p]]
+            values_s[p] = [history[p], act_south[p], demand_south[p], act_south[p]-demand_south[p], roles_s[p], "-", "-", "-", "-", "-"]
         else:
             values_s[p] = [model_horizon[p-len(history)], act_south[p], demand_south[p], act_south[p]-demand_south[p], roles_s[p], transmission_south_out[p], transmission_south_in[p], transmission_south_out[p] - transmission_south_in[p], (((transmission_south_out[p]-transmission_south_in[p]) - (act_south[p] - demand_south[p]))), answers_s[p]]
 
     values_s = pd.DataFrame(values_s)
-    values_s = values_s.to_string(index=False)
-
+    values_s = values_s.to_string(index=False, header=False)
+    
+    print("                       South")
     print(values_s)
 
     #creating the excel with the historical years
