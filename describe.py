@@ -239,9 +239,15 @@ def historic__expansion(make_df,scenario,local,history):
     historic_new_cap_SW =  [[46.59,  0.29,   1.99,   0,      2.12,   0,      3.47,   1.64,   0       ],
                             [6.36,   0.03,   0.00,   0.0021, 0.25,   0,      0.41,   0,      0.0001  ],
                             [0.88,   0.00,   0.00,   0.0047, 0.00,   0,      0.00,   0,      0.84    ]]
-    historic_new_cap_S  =  [[8.2040, 0,      0,      0,      0.0005, 0.0412, 0.1619, 0.459,  0       ],
-                            [10.1951,0.144,  0,      0.8668, 0.1348, 0.4376, 0.3921, 0.5706, 0.00004 ],
-                            [4.511,  0.1272, 0,      0.7941, 0.3533, 0.7382, 0.1562, 0.25244,0.2204  ]]
+    historic_new_cap_S  =  [[12.81,  0.26,   0.00,   0,      0.46,   0.15,   0.67,   0.46,   0       ],
+                            [1.41,   0.00,   0.00,   0.0021, 0.00,   0.82,   0.00,   0.11,   0.0001  ],
+                            [0.35,   0.00,   0.00,   0.0047, 0.00,   0.98,   0.00,   0.00,   0.55    ]]
+    
+    # Adjust values for 5 years average
+    historic_new_cap_N  = [[valor / 5 for valor in linha] for linha in historic_new_cap_N]
+    historic_new_cap_NE = [[valor / 5 for valor in linha] for linha in historic_new_cap_NE]
+    historic_new_cap_SW = [[valor / 5 for valor in linha] for linha in historic_new_cap_SW]
+    historic_new_cap_S  = [[valor / 5 for valor in linha] for linha in historic_new_cap_S]
 
     for j in range(len(history)):
 
