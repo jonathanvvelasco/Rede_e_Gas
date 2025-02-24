@@ -30,6 +30,7 @@ def definitions(pd,scenario):
     tecs = ["oil_ppl", "pch_ppl","nuclear_g_ppl", "biogas_ppl", "solar_photovoltaic_ppl", "solar_csp_ppl","onshore_wind_ppl", "offshore_wind_ppl","biomass_retrofit_ppl", "biomass_greenfield_ppl","GN_open_cycle_ppl", "GN_combined_cycle_ppl","national_coal_ppl", "imported_coal_ppl","large_hydroelectric_ppl", "medium_hydroelectric_ppl","grid", "bulb"]
     technology = []
 
+    # Define technologies for each region
     for k in nodes:
         for j in range(len(tecs)):
             tec = ""
@@ -44,13 +45,8 @@ def definitions(pd,scenario):
 
             else:
                 technology.append(tecs[j] + "_" + k)
-            
-            
-    
-    
-                    
-                
-            
+
+    # Define sets
     scenario.add_set("commodity", ["electricity", "electric_households"])
     scenario.add_set("commodity", ["gas","gas households"])
     scenario.add_set("level", ["primary","secondary", "final", "useful"])

@@ -5,7 +5,8 @@ from matplotlib.pyplot import *
 import matplotlib.pyplot as plt
 from tkinter import messagebox
 import tkinter as tk
-
+from message_ix.report import Reporter
+from message_ix.util.tutorial import prepare_plots
 from message_ix.utils import make_df
 
 import begin
@@ -27,17 +28,18 @@ scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baselin
 scenario, history, model_horizon, country, nodes    = begin.definitions (pd,scenario)
 
 for local in nodes:
-    scenario                                            = begin.demand    (pd,scenario,model_horizon,local)
-    vintage_years, act_years,base_input, base_output    = connect.base         (make_df,scenario,local)
+    scenario                                            = begin.demand          (pd,scenario,model_horizon,local)
+    vintage_years, act_years,base_input, base_output    = connect.base          (make_df,scenario,local)
     scenario, grid_efficiency                           = connect.technologies  (scenario,base_input, base_output,local)
-    scenario, capacity_factor               = describe.capacity__factor     (make_df,scenario,local,vintage_years, act_years)
-    scenario                                = describe.life_time            (make_df,scenario,local,model_horizon)
-    scenario                                = describe.growth__tecnologies  (make_df,scenario,local,model_horizon)
-    scenario                                = describe.historic__generation    (make_df,scenario,grid_efficiency,local,history,capacity_factor)
-    scenario                                = describe.inv_costs   (make_df,scenario,local,model_horizon)
-    scenario                                = describe.fix_costs           (make_df,scenario,local,vintage_years, act_years)
-    scenario                                = describe.var_costs       (make_df,scenario,local,vintage_years, act_years)
-    scenario                                = limits.expansion_up           (make_df,scenario,local)
+    scenario, capacity_factor               = describe.capacity__factor         (make_df,scenario,local,vintage_years, act_years)
+    scenario                                = describe.life_time                (make_df,scenario,local,model_horizon)
+    scenario                                = describe.growth__tecnologies      (make_df,scenario,local,model_horizon)
+    scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW                                = describe.historic__generation    (make_df,scenario,local,history)
+    scenario                                = describe.historic__expansion      (make_df,scenario,local,history)
+    scenario                                = describe.inv_costs                (make_df,scenario,local,model_horizon)
+    scenario                                = describe.fix_costs                (make_df,scenario,local,vintage_years, act_years)
+    scenario                                = describe.var_costs                (make_df,scenario,local,vintage_years, act_years)
+    scenario                                = limits.expansion_up               (make_df,scenario,local)
 
 scenario = connect.transmission_S_SE(make_df,scenario)
 scenario = connect.transmission_SE_S(make_df,scenario)
@@ -52,13 +54,9 @@ scenario = connect.transmission_SE_N(make_df,scenario)
 scenario.solve()
 
 
-<<<<<<< Updated upstream
-#outputs.generate_excel(pd,scenario)
-#outputs.validation_table(pd)
-=======
 outputs.generate_excel(pd,scenario)
-outputs.validation_table(pd, scenario)
->>>>>>> Stashed changes
+outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW, history, model_horizon)
+outputs.plots(scenario, Reporter, prepare_plots, plt)
 
 #tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
