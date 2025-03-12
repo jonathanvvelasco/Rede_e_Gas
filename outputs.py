@@ -458,14 +458,27 @@ def plots(scenario, Reporter, prepare_plots, plt):
     ###################
 
     #activity
-    rep.get("plot activity")
-    plt.title("Energy System Activity")
+    # rep.get("plot activity")
+    # plt.title("Energy System Activity")
 
     ###################
 
     #new capacity
-    rep.get("plot new capacity")
+    tol = 1e-3                                                      # Tolerância para gráfico
+    keyCAP_NEW = rep.full_key("CAP_NEW")                            # Chave CAP_NEW
+    dfCAP_NEW  = rep.get(keyCAP_NEW)                                # Dados CAP_NEW
+    dados_EXP  = dfCAP_NEW[dfCAP_NEW>tol]                           # Filtra CAP_NEW >tol
+    tecno_EXP  = dados_EXP.index.get_level_values('t').tolist()     # Lista Tecnologias em Expansão
+    tecno_EXP  = list(set(tecno_EXP))                               # Remove duplicatas
+    tecno_EXP = [item for item in tecno_EXP if not item.startswith('bulb')]  # Remove bulb
+
+    rep.set_filters(t=tecno_EXP)                                # Filtra tecnologias
+    rep.get("plot new capacity")                                # Plota gráfico
     plt.title("Energy System New Capacity")
+
+    # Teste futuro
+    # dados_EXP1 = dados_EXP[~dados_EXP.index.get_level_values('t').str.startswith('bulb')]
+    # dados_EXP1.plot(kind='bar',title="Energy System New Capacity", stacked=True, legend=True)
 
     ###################
 
