@@ -5,7 +5,8 @@ from matplotlib.pyplot import *
 import matplotlib.pyplot as plt
 from tkinter import messagebox
 import tkinter as tk
-
+from message_ix.report import Reporter
+from message_ix.util.tutorial import prepare_plots
 from message_ix.utils import make_df
 
 import begin
@@ -53,9 +54,9 @@ scenario = connect.transmission_SE_N(make_df,scenario)
 scenario.solve()
 
 
-outputs.generate_excel(pd,scenario)
-outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW, history, model_horizon)
-
+#outputs.generate_excel(pd,scenario)
+#outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW, history, model_horizon)
+outputs.plots(scenario, Reporter, prepare_plots, plt)
 
 #tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
