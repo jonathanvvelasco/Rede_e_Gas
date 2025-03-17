@@ -11,7 +11,7 @@ from message_ix.utils import make_df
 
 import begin
 import connect
-import describe
+import describe_electric
 import limits
 import outputs
 
@@ -31,14 +31,14 @@ for local in nodes:
     scenario                                            = begin.demand          (pd,scenario,model_horizon,local)
     vintage_years, act_years,base_input, base_output    = connect.base          (make_df,scenario,local)
     scenario, grid_efficiency                           = connect.technologies  (scenario,base_input, base_output,local)
-    scenario, capacity_factor               = describe.capacity__factor         (make_df,scenario,local,vintage_years, act_years)
-    scenario                                = describe.life_time                (make_df,scenario,local,model_horizon)
-    scenario                                = describe.growth__tecnologies      (make_df,scenario,local,model_horizon)
-    scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW                                = describe.historic__generation    (make_df,scenario,local,history)
-    scenario                                = describe.historic__expansion      (make_df,scenario,local,history)
-    scenario                                = describe.inv_costs                (make_df,scenario,local,model_horizon)
-    scenario                                = describe.fix_costs                (make_df,scenario,local,vintage_years, act_years)
-    scenario                                = describe.var_costs                (make_df,scenario,local,vintage_years, act_years)
+    scenario, capacity_factor               = describe_electric.capacity__factor         (make_df,scenario,local,vintage_years, act_years)
+    scenario                                = describe_electric.life_time                (make_df,scenario,local,model_horizon)
+    scenario                                = describe_electric.growth__tecnologies      (make_df,scenario,local,model_horizon)
+    scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW                                = describe_electric.historic__generation    (make_df,scenario,local,history)
+    scenario                                = describe_electric.historic__expansion      (make_df,scenario,local,history)
+    scenario                                = describe_electric.inv_costs                (make_df,scenario,local,model_horizon)
+    scenario                                = describe_electric.fix_costs                (make_df,scenario,local,vintage_years, act_years)
+    scenario                                = describe_electric.var_costs                (make_df,scenario,local,vintage_years, act_years)
     scenario                                = limits.expansion_up               (make_df,scenario,local)
 
 scenario = connect.transmission_S_SE(make_df,scenario)
