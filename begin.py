@@ -47,24 +47,30 @@ def definitions(pd,scenario):
                 technology.append(tecs[j] + "_" + k)
 
     # Define sets
-    scenario.add_set("commodity", ["electricity", "electric_households"])
-    scenario.add_set("commodity", ["gas","heating"])
     scenario.add_set("level", ["primary","secondary", "final", "useful"])
+    scenario.add_set("mode", "standard")
+
+    # Sets on the Electricity Sector
+    scenario.add_set("commodity", ["electricity", "electric_households"])
     scenario.add_set("technology", technology)
     scenario.add_set("technology", ['transmission_S_SE/CW', 'transmission_SE/CW_S',"transmission_SE/CW_NE", "transmission_NE_SE/CW", "transmission_N_NE", "transmission_NE_N", "transmission_N_SE/CW", "transmission_SE/CW_N"])
-    scenario.add_set("mode", "standard")
+    
+    # Sets on the Natural Gas Sector
+    scenario.add_set("commodity", ["gnl_imported", "gas_distributed", "gas_households"])
+    scenario.add_set("technology", ["GNL", "pipelines", "boiler"])
 
     return scenario, history, model_horizon, country, nodes
 
 
 def demand_eletric(pd,scenario,model_horizon,local):
-    # Define demand (Mwa)
+    # Define demand (GWa)
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     demand_gw_NE = [13.5, 14.4, 15.6]
     demand_gw_N  = [ 8.0,  8.6,  9.3]
     demand_gw_SW = [46.8, 49.9, 54.2]
     demand_gw_S  = [14.2, 15.1, 16.4]
 
+    # Check local node
     if local == 'N':
         demand_gw = demand_gw_N
     if local == 'NE':
@@ -73,7 +79,9 @@ def demand_eletric(pd,scenario,model_horizon,local):
         demand_gw = demand_gw_SW
     if local == 'S':
         demand_gw = demand_gw_S
-    demanda = pd.Series(demand_gw, index=pd.Index(model_horizon, name="Time"))
+
+    # Convert data to dataframe format
+    demand = pd.Series(demand_gw, index=pd.Index(model_horizon, name="Time"))
     electric_demand = pd.DataFrame(
         {
             "node": local,
@@ -81,7 +89,7 @@ def demand_eletric(pd,scenario,model_horizon,local):
             "level": "useful",
             "year": model_horizon,
             "time": "year",
-            "value": demanda,
+            "value": demand,
             "unit": "GWa",
         }
     )
@@ -90,33 +98,36 @@ def demand_eletric(pd,scenario,model_horizon,local):
     return scenario
 
 def demand_gas(pd,scenario,model_horizon,local):
-    # Define demand (Mwa)
+    # Define demand (MMm3/day)
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    demanda_gas_NE = [ 7.3,	 8.5,	 8.5]
-    demanda_gas_N  = [ 0.5,	 0.8,	 0.8]
-    demanda_gas_SE = [31.3,	35.8,	40.3]
-    demanda_gas_S  = [ 4.0,	 6.0,	 7.5]
+    demand_gas_NE = [ 7.3,	 8.5,	 8.5]
+    demand_gas_N  = [ 0.5,	 0.8,	 0.8]
+    demand_gas_SE = [31.3,	35.8,	40.3]
+    demand_gas_S  = [ 4.0,	 6.0,	 7.5]
 
+    # Check local node
     if local == 'N':
-        demand_gas = demanda_gas_N
+        demand_gas = demand_gas_N
     if local == 'NE':
-        demand_gas = demanda_gas_NE
+        demand_gas = demand_gas_NE
     if local == 'SE/CW':
-        demand_gas = demanda_gas_SE
+        demand_gas = demand_gas_SE
     if local == 'S':
-        demand_gas = demanda_gas_S
-    demanda = pd.Series(demand_gas, index=pd.Index(model_horizon, name="Time"))
-    electric_demand = pd.DataFrame(
+        demand_gas = demand_gas_S
+
+    # Convert data to dataframe format
+    demand = pd.Series(demand_gas, index=pd.Index(model_horizon, name="Time"))
+    gas_demand = pd.DataFrame(
         {
             "node": local,
-            "commodity": "electric_households",
+            "commodity": "gas_households",
             "level": "useful",
             "year": model_horizon,
             "time": "year",
-            "value": demanda,
-            "unit": "GWa",
+            "value": demand,
+            "unit": "MMm3/day",
         }
     )
-    scenario.add_par("demand", electric_demand)
+    scenario.add_par("demand", gas_demand)
 
     return scenario
