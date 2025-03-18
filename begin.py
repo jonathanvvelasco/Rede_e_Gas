@@ -48,7 +48,7 @@ def definitions(pd,scenario):
 
     # Define sets
     scenario.add_set("commodity", ["electricity", "electric_households"])
-    scenario.add_set("commodity", ["gas","gas households"])
+    scenario.add_set("commodity", ["gas","heating"])
     scenario.add_set("level", ["primary","secondary", "final", "useful"])
     scenario.add_set("technology", technology)
     scenario.add_set("technology", ['transmission_S_SE/CW', 'transmission_SE/CW_S',"transmission_SE/CW_NE", "transmission_NE_SE/CW", "transmission_N_NE", "transmission_NE_N", "transmission_N_SE/CW", "transmission_SE/CW_N"])
@@ -57,7 +57,7 @@ def definitions(pd,scenario):
     return scenario, history, model_horizon, country, nodes
 
 
-def demand(pd,scenario,model_horizon,local):
+def demand_eletric(pd,scenario,model_horizon,local):
     # Define demand (Mwa)
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     demand_gw_NE = [13.5, 14.4, 15.6]
@@ -74,6 +74,38 @@ def demand(pd,scenario,model_horizon,local):
     if local == 'S':
         demand_gw = demand_gw_S
     demanda = pd.Series(demand_gw, index=pd.Index(model_horizon, name="Time"))
+    electric_demand = pd.DataFrame(
+        {
+            "node": local,
+            "commodity": "electric_households",
+            "level": "useful",
+            "year": model_horizon,
+            "time": "year",
+            "value": demanda,
+            "unit": "GWa",
+        }
+    )
+    scenario.add_par("demand", electric_demand)
+    
+    return scenario
+
+def demand_gas(pd,scenario,model_horizon,local):
+    # Define demand (Mwa)
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    demanda_gas_NE = [ 7.3,	 8.5,	 8.5]
+    demanda_gas_N  = [ 0.5,	 0.8,	 0.8]
+    demanda_gas_SE = [31.3,	35.8,	40.3]
+    demanda_gas_S  = [ 4.0,	 6.0,	 7.5]
+
+    if local == 'N':
+        demand_gas = demanda_gas_N
+    if local == 'NE':
+        demand_gas = demanda_gas_NE
+    if local == 'SE/CW':
+        demand_gas = demanda_gas_SE
+    if local == 'S':
+        demand_gas = demanda_gas_S
+    demanda = pd.Series(demand_gas, index=pd.Index(model_horizon, name="Time"))
     electric_demand = pd.DataFrame(
         {
             "node": local,

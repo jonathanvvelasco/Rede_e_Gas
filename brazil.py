@@ -28,9 +28,11 @@ scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baselin
 scenario, history, model_horizon, country, nodes    = begin.definitions (pd,scenario)
 
 for local in nodes:
-    scenario                                            = begin.demand          (pd,scenario,model_horizon,local)
+    scenario                                            = begin.demand_eletric  (pd,scenario,model_horizon,local)
     vintage_years, act_years,base_input, base_output    = connect.base          (make_df,scenario,local)
     scenario, grid_efficiency                           = connect.technologies  (scenario,base_input, base_output,local)
+
+    # ======================================= Describe electric sector
     scenario, capacity_factor               = describe_electric.capacity__factor         (make_df,scenario,local,vintage_years, act_years)
     scenario                                = describe_electric.life_time                (make_df,scenario,local,model_horizon)
     scenario                                = describe_electric.growth__tecnologies      (make_df,scenario,local,model_horizon)
@@ -39,8 +41,13 @@ for local in nodes:
     scenario                                = describe_electric.inv_costs                (make_df,scenario,local,model_horizon)
     scenario                                = describe_electric.fix_costs                (make_df,scenario,local,vintage_years, act_years)
     scenario                                = describe_electric.var_costs                (make_df,scenario,local,vintage_years, act_years)
+
+    # ======================================= Describe gas value chain
+
+    # ======================================= Include explicit limits
     scenario                                = limits.expansion_up               (make_df,scenario,local)
 
+# ======== Include Transmission of Electricity
 scenario = connect.transmission_S_SE(make_df,scenario)
 scenario = connect.transmission_SE_S(make_df,scenario)
 scenario = connect.transmission_SE_NE(make_df,scenario)
@@ -50,13 +57,15 @@ scenario = connect.transmission_NE_N(make_df,scenario)
 scenario = connect.transmission_N_SE(make_df,scenario)
 scenario = connect.transmission_SE_N(make_df,scenario)
 
+# ======== Include Transmission of Natural Gas
+
 
 scenario.solve()
 
 
 #outputs.generate_excel(pd,scenario)
 #outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW, history, model_horizon)
-outputs.plots(scenario, Reporter, prepare_plots, plt)
+#outputs.plots(scenario, Reporter, prepare_plots, plt)
 
 #tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
