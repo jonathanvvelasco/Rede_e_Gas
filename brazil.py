@@ -46,7 +46,7 @@ for local in nodes:
 
     # ======================================= Describe gas value chain
     scenario                                            = begin.demand_gas  (pd,scenario,model_horizon,local)
-    scenario                                = connect_gas.technologies  (scenario,base_input,base_output)
+    scenario                                = connect_gas.technologies  (scenario,base_input,base_output, local)
 
     # ======================================= Include explicit limits
     scenario                                = limits.expansion_up               (make_df,scenario,local)

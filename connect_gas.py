@@ -1,6 +1,6 @@
 # Module of Connections on Technologies of Natural Gas (Input and Output)
 
-def technologies(scenario,base_input,base_output):
+def technologies(scenario,base_input,base_output, local):
     
     # Define the connection of input and output of the technologies
     # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -16,8 +16,14 @@ def technologies(scenario,base_input,base_output):
     scenario.add_par("output", pipe_out)
 
     # Imported GNL (...-> Secondary)
-    gnl_out    = base_output.assign(technology="GNL", commodity="gnl_imported", level="secondary", value=1.0)
-    scenario.add_par("output", gnl_out)
+    if local != "N":
+        gnl_out    = base_output.assign(technology="GNL", commodity="gnl_imported", level="secondary", value=1.0)
+        scenario.add_par("output", gnl_out)
+
+    #GASBOL (...-> Primary)
+    if local == "SE/CW":
+        gasbol_out    = base_output.assign(technology="GASBOL", commodity="gas_bol", level="primary", value=1.0)
+        scenario.add_par("output", gasbol_out)
 
 
     return scenario

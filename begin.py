@@ -56,8 +56,8 @@ def definitions(pd,scenario):
     scenario.add_set("technology", ['transmission_S_SE/CW', 'transmission_SE/CW_S',"transmission_SE/CW_NE", "transmission_NE_SE/CW", "transmission_N_NE", "transmission_NE_N", "transmission_N_SE/CW", "transmission_SE/CW_N"])
     
     # Sets on the Natural Gas Sector
-    scenario.add_set("commodity", ["gnl_imported", "gas_distributed", "gas_households"])
-    scenario.add_set("technology", ["GNL", "pipelines", "boiler"])
+    scenario.add_set("commodity", ["gnl_imported", "gas_distributed", "gas_households", "gas_bol"])
+    scenario.add_set("technology", ["GNL", "pipelines", "boiler", "GASBOL"])
 
     return scenario, history, model_horizon, country, nodes
 
