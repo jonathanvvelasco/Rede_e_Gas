@@ -56,7 +56,7 @@ def definitions(pd,scenario):
     scenario.add_set("technology", ['transmission_S_SE/CW', 'transmission_SE/CW_S',"transmission_SE/CW_NE", "transmission_NE_SE/CW", "transmission_N_NE", "transmission_NE_N", "transmission_N_SE/CW", "transmission_SE/CW_N"])
     
     # Sets on the Natural Gas Sector
-    scenario.add_set("commodity", ["gnl_imported", "gas_distributed", "gas_households", "gas_bol", "gas_underground"])
+    scenario.add_set("commodity", ["gnl_imported", "natural_gas", "gas_underground", "gas_extracted"])
     scenario.add_set("technology", ["GNL", "pipelines", "boiler", "GASBOL", "UPGN", "Gas_Offshore", "Gas_Onshore"])
 
     return scenario, history, model_horizon, country, nodes
@@ -120,7 +120,7 @@ def demand_gas(pd,scenario,model_horizon,local):
     gas_demand = pd.DataFrame(
         {
             "node": local,
-            "commodity": "gas_households",
+            "commodity": "natural_gas",
             "level": "useful",
             "year": model_horizon,
             "time": "year",

@@ -378,11 +378,21 @@ def technologies(scenario,base_input,base_output,local):
         value=6.70,
         unit="MMm3/day",
     )
+
+    
+    # GN_open_cycle_in2 = base_input.assign(
+    #     technology="GN_open_cycle_" + local + "_ppl",
+    #     commodity="natural_gas",
+    #     level="secondary",
+    #     value=6.70,
+    #     unit="MMm3/day",
+    # )
     scenario.add_par("output", GN_open_cycle_out)
     scenario.add_par("input", GN_open_cycle_in)
+    # scenario.add_par("input", GN_open_cycle_in2)
     scenario.idx_names("input")
 
-    # NG Combined Cycle Generation ( ... -> Secondary)
+    # NG Combined Cycle Generation ( Secondary -> Secondary)
     GN_combined_cycle_out = base_output.assign(
         technology="GN_combined_cycle_" + local + "_ppl",
         commodity="electricity",

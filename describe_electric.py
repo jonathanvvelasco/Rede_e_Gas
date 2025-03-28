@@ -103,7 +103,7 @@ def growth__tecnologies(make_df,scenario,local,model_horizon):
             time="year",
             unit="-",
             technology=tec,
-            value=1.0,
+            value=0.05,
         )
         scenario.add_par("growth_activity_up", df)
     return scenario
