@@ -45,7 +45,7 @@ def technologies(scenario,base_input,base_output, local):
 
     #Reinjected Gas (Primary -> Resources)
     if local != "N": 
-        reinjection_out    = base_output.assign(technology="Gas_Reinjection", commodity="gas_extracted", level="resources", value=1.0)
+        reinjection_out    = base_output.assign(technology="Gas_Reinjection", commodity="gas_underground", level="resources", value=1.0)
         scenario.add_par("output", reinjection_out)
 
     return scenario
