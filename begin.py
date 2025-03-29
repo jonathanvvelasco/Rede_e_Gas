@@ -47,7 +47,7 @@ def definitions(pd,scenario):
                 technology.append(tecs[j] + "_" + k)
 
     # Define sets
-    scenario.add_set("level", ["primary","secondary", "final", "useful"])
+    scenario.add_set("level", ["resources", "primary", "secondary", "final", "useful"])
     scenario.add_set("mode", "standard")
 
     # Sets on the Electricity Sector
@@ -56,8 +56,8 @@ def definitions(pd,scenario):
     scenario.add_set("technology", ['transmission_S_SE/CW', 'transmission_SE/CW_S',"transmission_SE/CW_NE", "transmission_NE_SE/CW", "transmission_N_NE", "transmission_NE_N", "transmission_N_SE/CW", "transmission_SE/CW_N"])
     
     # Sets on the Natural Gas Sector
-    scenario.add_set("commodity", ["gnl_imported", "natural_gas", "gas_underground", "gas_extracted"])
-    scenario.add_set("technology", ["GNL", "pipelines", "boiler", "GASBOL", "UPGN", "Gas_Offshore", "Gas_Onshore"])
+    scenario.add_set("commodity", ["gnl_imported", "natural_gas", "gas_extracted"])
+    scenario.add_set("technology", ["GNL", "pipelines", "boiler", "GASBOL", "UPGN", "Gas_Offshore", "Gas_Onshore", "Gas_Reinjection"])
 
     return scenario, history, model_horizon, country, nodes
 
