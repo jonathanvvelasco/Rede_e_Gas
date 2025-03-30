@@ -24,7 +24,7 @@ mp.add_unit("mi USD/GWa")
 mp.add_unit("MMm3/day")
 
 
-scenario = message_ix.Scenario(mp, model="Brazil Electrified", scenario="baseline", version="new")
+scenario = message_ix.Scenario(mp, model="Brasil Electrified", scenario="baseline", version="new")
 
 
 scenario, history, model_horizon, country, nodes    = begin.definitions (pd,scenario)
@@ -45,11 +45,12 @@ for local in nodes:
     scenario                                = describe_electric.var_costs                (make_df,scenario,local,vintage_years, act_years)
 
     # ======================================= Describe gas value chain
-    scenario                                            = begin.demand_gas  (pd,scenario,model_horizon,local)
-    scenario                                = connect_gas.technologies  (scenario,base_input,base_output, local)
+    scenario                                = begin.demand_gas                  (pd,scenario,model_horizon,local)
+    scenario                                = connect_gas.technologies          (scenario,base_input,base_output, local)
 
     # ======================================= Include explicit limits
     scenario                                = limits.expansion_up               (make_df,scenario,local)
+    scenario                                = limits.activity_up                (make_df,scenario,local)
 
 # ======== Include Transmission of Electricity
 scenario = connect.transmission_S_SE(make_df,scenario)
@@ -65,11 +66,12 @@ scenario = connect.transmission_SE_N(make_df,scenario)
 
 
 scenario.solve()
+scenario.var("OBJ")["lvl"]
 
 
-outputs.generate_excel(pd,scenario)
-outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW, history, model_horizon)
-outputs.plots(scenario, Reporter, prepare_plots, plt)
+#outputs.generate_excel(pd,scenario)
+#outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW, history, model_horizon)
+# outputs.plots(scenario, Reporter, prepare_plots, plt)
 
 #tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 

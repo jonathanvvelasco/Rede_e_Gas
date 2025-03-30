@@ -12,9 +12,9 @@ def technologies(scenario,base_input,base_output, local):
     scenario.add_par("input", boiler_in)
 
     # Gas Pipelines (Primary -> Secondary)
-    pipe_in    = base_output.assign(technology="pipelines", commodity="natural_gas", level="primary", value=1.0)
+    pipe_in    = base_input.assign(technology="pipelines", commodity="natural_gas", level="primary", value=1.0)
     pipe_out    = base_output.assign(technology="pipelines", commodity="natural_gas", level="secondary", value=1.0)
-    scenario.add_par("output", pipe_in)
+    scenario.add_par("input", pipe_in)
     scenario.add_par("output", pipe_out)
 
     # Imported GNL (...-> Secondary)
@@ -43,9 +43,10 @@ def technologies(scenario,base_input,base_output, local):
         offshore_out    = base_output.assign(technology="Gas_Offshore", commodity="gas_extracted", level="primary", value=1.0)
         scenario.add_par("output", offshore_out)
 
-    #Reinjected Gas (Primary -> Resources)
+    #Reinjected Gas (Primary -> ...)
     if local != "N": 
-        reinjection_out    = base_output.assign(technology="Gas_Reinjection", commodity="gas_underground", level="resources", value=1.0)
-        scenario.add_par("output", reinjection_out)
+        reinjection_in    = base_input.assign(technology="Gas_Reinjection", commodity="gas_extracted", level="primary", value=1.0)
+        scenario.add_par("input", reinjection_in)
+        scenario.idx_names("input")
 
     return scenario
