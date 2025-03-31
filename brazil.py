@@ -72,6 +72,7 @@ scenario.var("OBJ")["lvl"]
 #outputs.generate_excel(pd,scenario)
 #outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW, history, model_horizon)
 # outputs.plots(scenario, Reporter, prepare_plots, plt)
+outputs.sankey(scenario,Reporter)
 
 #tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 
