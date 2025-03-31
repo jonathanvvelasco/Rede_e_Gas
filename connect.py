@@ -362,7 +362,7 @@ def technologies(scenario,base_input,base_output,local):
     )
     scenario.add_par("output", biomass_greenfield_out)
 
-    # NG Open Cycle Generation ( ... -> Secondary)
+    # NG Open Cycle Generation ( Secondary -> Secondary)
     GN_open_cycle_out = base_output.assign(
         technology="GN_open_cycle_" + local + "_ppl",
         commodity="electricity",
@@ -370,9 +370,26 @@ def technologies(scenario,base_input,base_output,local):
         value=1.0,
         unit="GWa",
     )
+    GN_open_cycle_in_gnl = base_input.assign(
+        technology="GN_open_cycle_" + local + "_ppl",
+        commodity="gnl_imported",
+        level="secondary",
+        value=6.70,
+        unit="MMm3/day",
+    )
+    GN_open_cycle_in_pipe = base_input.assign(
+        technology="GN_open_cycle_" + local + "_ppl",
+        commodity="natural_gas",
+        level="secondary",
+        value=6.70,
+        unit="MMm3/day",
+    )
     scenario.add_par("output", GN_open_cycle_out)
+    scenario.add_par("input", GN_open_cycle_in_gnl)
+    scenario.add_par("input", GN_open_cycle_in_pipe)
+    scenario.idx_names("input")
 
-    # NG Combined Cycle Generation ( ... -> Secondary)
+    # NG Combined Cycle Generation ( Secondary -> Secondary)
     GN_combined_cycle_out = base_output.assign(
         technology="GN_combined_cycle_" + local + "_ppl",
         commodity="electricity",
@@ -380,7 +397,23 @@ def technologies(scenario,base_input,base_output,local):
         value=1.0,
         unit="GWa",
     )
+    GN_combined_cycle_in_gnl = base_input.assign(
+        technology="GN_combined_cycle_" + local + "_ppl",
+        commodity="gnl_imported",
+        level="secondary",
+        value=4.26,
+        unit="MMm3/day",
+    )
+    GN_combined_cycle_in_pipe = base_input.assign(
+        technology="GN_combined_cycle_" + local + "_ppl",
+        commodity="natural_gas",
+        level="secondary",
+        value=4.26,
+        unit="MMm3/day",
+    )
     scenario.add_par("output", GN_combined_cycle_out)
+    scenario.add_par("input", GN_combined_cycle_in_gnl)
+    scenario.add_par("input", GN_combined_cycle_in_pipe)
 
     # Large Hydroelectric Generation ( ... -> Secondary)
     large_hydroelectric_out = base_output.assign(
