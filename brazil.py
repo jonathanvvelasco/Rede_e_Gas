@@ -10,8 +10,9 @@ from message_ix.util.tutorial import prepare_plots
 from message_ix.utils import make_df
 
 import begin
-import connect
-import connect_gas
+import chain_electricity
+import chain_gas
+import demand
 import describe_electric
 import limits
 import outputs
@@ -32,9 +33,9 @@ scenario, history, model_horizon, country, nodes    = begin.definitions (pd,scen
 for local in nodes:
 
     # ======================================= Describe electric sector
-    scenario                                            = begin.demand_eletric  (pd,scenario,model_horizon,local)
-    vintage_years, act_years,base_input, base_output    = connect.base          (make_df,scenario,local)
-    scenario, grid_efficiency                           = connect.technologies  (scenario,base_input, base_output,local)
+    scenario                                            = demand.electricity    (pd,scenario,model_horizon,local)
+    vintage_years, act_years,base_input, base_output    = chain_electricity.base          (make_df,scenario,local)
+    scenario, grid_efficiency                           = chain_electricity.technologies  (scenario,base_input, base_output,local)
     scenario, capacity_factor               = describe_electric.capacity__factor         (make_df,scenario,local,vintage_years, act_years)
     scenario                                = describe_electric.life_time                (make_df,scenario,local,model_horizon)
     scenario                                = describe_electric.growth__tecnologies      (make_df,scenario,local,model_horizon)
@@ -45,23 +46,24 @@ for local in nodes:
     scenario                                = describe_electric.var_costs                (make_df,scenario,local,vintage_years, act_years)
 
     # ======================================= Describe gas value chain
-    scenario                                = begin.potential_gas               (pd,scenario,local)
-    scenario                                = begin.demand_gas                  (pd,scenario,model_horizon,local)
-    scenario                                = connect_gas.technologies          (scenario,base_input,base_output, local)
+    scenario                                = begin.resource_gas_onshore        (pd,scenario,local)
+    scenario                                = begin.resource_gas_offshore       (pd,scenario,local)
+    scenario                                = demand.natural_gas                (pd,scenario,model_horizon,local)
+    scenario                                = chain_gas.technologies            (scenario,base_input,base_output, local)
 
     # ======================================= Include explicit limits
     scenario                                = limits.expansion_up               (make_df,scenario,local)
     scenario                                = limits.activity_up                (make_df,scenario,local)
 
 # ======== Include Transmission of Electricity
-scenario = connect.transmission_S_SE(make_df,scenario)
-scenario = connect.transmission_SE_S(make_df,scenario)
-scenario = connect.transmission_SE_NE(make_df,scenario)
-scenario = connect.transmission_NE_SE(make_df,scenario)
-scenario = connect.transmission_N_NE(make_df,scenario)
-scenario = connect.transmission_NE_N(make_df,scenario)
-scenario = connect.transmission_N_SE(make_df,scenario)
-scenario = connect.transmission_SE_N(make_df,scenario)
+scenario = chain_electricity.transmission_S_SE(make_df,scenario)
+scenario = chain_electricity.transmission_SE_S(make_df,scenario)
+scenario = chain_electricity.transmission_SE_NE(make_df,scenario)
+scenario = chain_electricity.transmission_NE_SE(make_df,scenario)
+scenario = chain_electricity.transmission_N_NE(make_df,scenario)
+scenario = chain_electricity.transmission_NE_N(make_df,scenario)
+scenario = chain_electricity.transmission_N_SE(make_df,scenario)
+scenario = chain_electricity.transmission_SE_N(make_df,scenario)
 
 # ======== Include Transmission of Natural Gas
 

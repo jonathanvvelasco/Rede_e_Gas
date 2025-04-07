@@ -1,4 +1,4 @@
-# Module of Connections on Technologies of Natural Gas (Input and Output)
+# Module of Technology Chain of Natural Gas (Input and Output)
 
 def technologies(scenario,base_input,base_output, local):
     
@@ -34,19 +34,21 @@ def technologies(scenario,base_input,base_output, local):
     scenario.add_par("output", upgn_out)
 
     #Gas Onshore (Resource -> Primary)
-    onshore_in      = base_input.assign(technology="Gas_Onshore", commodity="gas_underground", level="resource", value=1.0)
+    onshore_in      = base_input.assign(technology="Gas_Onshore", commodity="gas_onland", level="resource", value=1.0)
     onshore_out     = base_output.assign(technology="Gas_Onshore", commodity="gas_extracted", level="primary", value=1.0)
     scenario.add_par("input", onshore_in)
     scenario.add_par("output", onshore_out)
 
 
     #Gas Offshore (...-> Primary)
-    if local != "N":
+    if (local != "N") and (local != "S"):
+        offshore_in     = base_input.assign(technology="Gas_Offshore", commodity="gas_undersea", level="resource", value=1.0)
         offshore_out    = base_output.assign(technology="Gas_Offshore", commodity="gas_extracted", level="primary", value=1.0)
+        scenario.add_par("input", offshore_in)
         scenario.add_par("output", offshore_out)
 
     #Reinjected Gas (Primary -> ...)
-    if local != "N": 
+    if (local != "N") and (local != "S"): 
         reinjection_in    = base_input.assign(technology="Gas_Reinjection", commodity="gas_extracted", level="primary", value=1.0)
         scenario.add_par("input", reinjection_in)
         scenario.idx_names("input")
