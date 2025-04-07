@@ -45,6 +45,7 @@ for local in nodes:
     scenario                                = describe_electric.var_costs                (make_df,scenario,local,vintage_years, act_years)
 
     # ======================================= Describe gas value chain
+    scenario                                = begin.potential_gas               (pd,scenario,local)
     scenario                                = begin.demand_gas                  (pd,scenario,model_horizon,local)
     scenario                                = connect_gas.technologies          (scenario,base_input,base_output, local)
 

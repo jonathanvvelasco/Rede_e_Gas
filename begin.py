@@ -47,7 +47,7 @@ def definitions(pd,scenario):
                 technology.append(tecs[j] + "_" + k)
 
     # Define sets
-    scenario.add_set("level", ["resources", "primary", "secondary", "final", "useful"])
+    scenario.add_set("level", ["resource", "primary", "secondary", "final", "useful"])
     scenario.add_set("mode", "standard")
 
     # Sets on the Electricity Sector
@@ -58,6 +58,10 @@ def definitions(pd,scenario):
     # Sets on the Natural Gas Sector
     scenario.add_set("commodity", ["gas_underground", "gnl_imported", "natural_gas", "gas_extracted"])
     scenario.add_set("technology", ["GNL", "pipelines", "boiler", "GASBOL", "UPGN", "Gas_Offshore", "Gas_Onshore", "Gas_Reinjection"])
+
+    # Add Fossil Resources
+    scenario.add_set("level_resource", "resource")
+    scenario.add_set("grade", ["natural_gas"])
 
     return scenario, history, model_horizon, country, nodes
 
@@ -129,5 +133,38 @@ def demand_gas(pd,scenario,model_horizon,local):
         }
     )
     scenario.add_par("demand", gas_demand)
+
+    return scenario
+
+
+def potential_gas(pd,scenario,local):
+    # Define demand (MMm3/day)
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    resource_gas_NE = 40
+    resource_gas_N  = 50
+    resource_gas_SE = 70
+    resource_gas_S  = 80
+
+    # Check local node
+    if local == 'N':
+        potential_gas = resource_gas_N
+    if local == 'NE':
+        potential_gas = resource_gas_NE
+    if local == 'SE/CW':
+        potential_gas = resource_gas_SE
+    if local == 'S':
+        potential_gas = resource_gas_S
+
+    # Convert data to dataframe format
+    gas_resource = pd.DataFrame(
+        {
+            "node": local,
+            "commodity": "gas_underground",
+            "grade": "natural_gas",
+            "value": [potential_gas],
+            "unit": "MMm3/day",
+        }
+    )
+    scenario.add_par("resource_volume", gas_resource)
 
     return scenario

@@ -28,13 +28,15 @@ def technologies(scenario,base_input,base_output, local):
         scenario.add_par("output", gasbol_out)
 
     #UPGN (Primary -> Primary)
-    upgn_in    = base_input.assign(technology="UPGN", commodity="gas_extracted", level="primary", value=1.0)
+    upgn_in     = base_input.assign(technology="UPGN", commodity="gas_extracted", level="primary", value=1.0)
     upgn_out    = base_output.assign(technology="UPGN", commodity="natural_gas", level="primary", value=1.0)
     scenario.add_par("input", upgn_in)
     scenario.add_par("output", upgn_out)
 
-    #Gas Onshore (...-> Primary)
-    onshore_out    = base_output.assign(technology="Gas_Onshore", commodity="gas_extracted", level="primary", value=1.0)
+    #Gas Onshore (Resource -> Primary)
+    onshore_in      = base_input.assign(technology="Gas_Onshore", commodity="gas_underground", level="resource", value=1.0)
+    onshore_out     = base_output.assign(technology="Gas_Onshore", commodity="gas_extracted", level="primary", value=1.0)
+    scenario.add_par("input", onshore_in)
     scenario.add_par("output", onshore_out)
 
 
