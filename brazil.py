@@ -25,6 +25,7 @@ mp.add_unit("mi USD/GWa")
 mp.add_unit("MMm3/day")
 
 
+
 scenario = message_ix.Scenario(mp, model="Brasil Electrified", scenario="baseline", version="new")
 
 
@@ -68,8 +69,16 @@ scenario = chain_electricity.transmission_SE_N(make_df,scenario)
 # ======== Include Transmission of Natural Gas
 
 
+# ======== Include Emissions
+scenario = outputs.emissions(make_df,scenario, mp, history, model_horizon, local)
+
+
+# ======== Solve The Model
 scenario.solve()
 scenario.var("OBJ")["lvl"]
+
+
+
 
 
 #outputs.generate_excel(pd,scenario)

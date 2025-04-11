@@ -507,3 +507,31 @@ def sankey(scenario,Reporter):
         fig.show()
 
     return None
+
+
+def emissions(make_df, scenario, mp, history, model_horizon, local):
+    #Creating new units
+    scenario.add_set("emission", "CO2")
+    scenario.add_cat("emission", "GHG", "CO2")
+    mp.add_unit("tCO2/kWa")
+    mp.add_unit("MtCO2")
+
+    
+    #Adding emission factor
+
+    ###Teste para apenas uma tecnologia
+    emission_factor = make_df(
+        "emission_factor",
+        node_loc= "N",
+        year_vtg=history,
+        year_act=model_horizon,
+        mode="standard",
+        unit="tCO2/kWa",
+        technology= "national_coal_N_ppl",
+        emission="CO2",
+        value=7.4,
+    )
+    scenario.add_par("emission_factor", emission_factor)
+
+    return None
+    
