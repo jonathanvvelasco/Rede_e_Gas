@@ -29,7 +29,7 @@ mp.add_unit("MMm3/day")
 scenario = message_ix.Scenario(mp, model="Brasil Electrified", scenario="baseline", version="new")
 
 
-scenario, history, model_horizon, country, nodes    = begin.definitions (pd,scenario)
+scenario, history, model_horizon, country, nodes, technology    = begin.definitions (pd,scenario)
 
 for local in nodes:
 
@@ -70,10 +70,12 @@ scenario = chain_electricity.transmission_SE_N(make_df,scenario)
 
 
 # ======== Include Emissions
-scenario = outputs.emissions(make_df,scenario, mp, history, model_horizon, local)
+scenario = outputs.emissions(make_df,scenario, mp, history, model_horizon, local, technology)
 
 
 # ======== Solve The Model
+scenario.commit(comment="Introducing emissions and setting an upper bound")
+scenario.set_as_default()
 scenario.solve()
 scenario.var("OBJ")["lvl"]
 

@@ -509,7 +509,36 @@ def sankey(scenario,Reporter):
     return None
 
 
-def emissions(make_df, scenario, mp, history, model_horizon, local):
+def emissions(make_df, scenario, mp, history, model_horizon, local, technology):
+    #Thermal technologies arrays
+    tech_n = []
+    tech_ne = []
+    tech_cw = []
+    tech_s = []
+
+    #Dividing thermal technologies
+    for j in technology:
+        if "biogas" in j or "cycle" in j or "coal" in j or "oil" in j or "biomass" in j:
+            if "_NE_" in j:
+                tech_ne.append(j)
+
+            elif "_N_" in j:
+                tech_n.append(j)
+
+            elif "_SE/CW_" in j:
+                tech_cw.append(j)
+
+            else:
+                tech_s.append(j)
+
+        elif "nuclear" in j:
+            if "_NE_" in j:
+                tech_ne.append(j)
+
+
+            elif "_SE/CW_" in j:
+                tech_cw.append(j)
+
     #Creating new units
     scenario.add_set("emission", "CO2")
     scenario.add_cat("emission", "GHG", "CO2")
@@ -517,21 +546,67 @@ def emissions(make_df, scenario, mp, history, model_horizon, local):
     mp.add_unit("MtCO2")
 
     
-    #Adding emission factor
+    #Adding emission factor for each region
 
-    ###Teste para apenas uma tecnologia
-    emission_factor = make_df(
-        "emission_factor",
-        node_loc= "N",
-        year_vtg=history,
-        year_act=model_horizon,
-        mode="standard",
-        unit="tCO2/kWa",
-        technology= "national_coal_N_ppl",
-        emission="CO2",
-        value=7.4,
-    )
-    scenario.add_par("emission_factor", emission_factor)
+    #N
+    for i in range (len(tech_n)):
+        emission_factor = make_df(
+            "emission_factor",
+            node_loc= "N",
+            year_vtg=history,
+            year_act=model_horizon,
+            mode="standard",
+            unit="tCO2/kWa",
+            technology= tech_n[i],
+            emission="CO2",
+            value=7.4,
+        )
+        scenario.add_par("emission_factor", emission_factor)
 
-    return None
+    #S
+    for i in range (len(tech_s)):
+        emission_factor = make_df(
+            "emission_factor",
+            node_loc= "N",
+            year_vtg=history,
+            year_act=model_horizon,
+            mode="standard",
+            unit="tCO2/kWa",
+            technology= tech_s[i],
+            emission="CO2",
+            value=7.4,
+        )
+        scenario.add_par("emission_factor", emission_factor)
+
+    #SE/CW
+    for i in range (len(tech_cw)):
+        emission_factor = make_df(
+            "emission_factor",
+            node_loc= "N",
+            year_vtg=history,
+            year_act=model_horizon,
+            mode="standard",
+            unit="tCO2/kWa",
+            technology= tech_cw[i],
+            emission="CO2",
+            value=7.4,
+        )
+        scenario.add_par("emission_factor", emission_factor)
+    
+    #NE
+    for i in range (len(tech_ne)):
+        emission_factor = make_df(
+            "emission_factor",
+            node_loc= "N",
+            year_vtg=history,
+            year_act=model_horizon,
+            mode="standard",
+            unit="tCO2/kWa",
+            technology= tech_ne[i],
+            emission="CO2",
+            value=7.4,
+        )
+        scenario.add_par("emission_factor", emission_factor)
+
+    return scenario
     

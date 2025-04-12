@@ -63,7 +63,7 @@ def definitions(pd,scenario):
     scenario.add_set("level_resource", "resource")
     scenario.add_set("grade", ["onshore_gas", "offshore_gas"])
 
-    return scenario, history, model_horizon, country, nodes
+    return scenario, history, model_horizon, country, nodes, technology
 
 
 def resource_gas_onshore(pd,scenario,local):
