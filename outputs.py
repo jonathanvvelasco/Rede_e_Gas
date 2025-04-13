@@ -564,7 +564,6 @@ def emissions(make_df, scenario, mp, history, model_horizon, local, technology):
         scenario.add_par("emission_factor", emission_factor)
 
     #S
-    for i in range (len(tech_s)):
         emission_factor = make_df(
             "emission_factor",
             node_loc= "S",
@@ -579,7 +578,6 @@ def emissions(make_df, scenario, mp, history, model_horizon, local, technology):
         scenario.add_par("emission_factor", emission_factor)
 
     #SE/CW
-    for i in range (len(tech_cw)):
         emission_factor = make_df(
             "emission_factor",
             node_loc= "SE/CW",
@@ -594,7 +592,6 @@ def emissions(make_df, scenario, mp, history, model_horizon, local, technology):
         scenario.add_par("emission_factor", emission_factor)
     
     #NE
-    for i in range (len(tech_ne)):
         emission_factor = make_df(
             "emission_factor",
             node_loc= "NE",
