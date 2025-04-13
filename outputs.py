@@ -567,7 +567,7 @@ def emissions(make_df, scenario, mp, history, model_horizon, local, technology):
     for i in range (len(tech_s)):
         emission_factor = make_df(
             "emission_factor",
-            node_loc= "N",
+            node_loc= "S",
             year_vtg=history,
             year_act=model_horizon,
             mode="standard",
@@ -582,7 +582,7 @@ def emissions(make_df, scenario, mp, history, model_horizon, local, technology):
     for i in range (len(tech_cw)):
         emission_factor = make_df(
             "emission_factor",
-            node_loc= "N",
+            node_loc= "SE/CW",
             year_vtg=history,
             year_act=model_horizon,
             mode="standard",
@@ -597,7 +597,7 @@ def emissions(make_df, scenario, mp, history, model_horizon, local, technology):
     for i in range (len(tech_ne)):
         emission_factor = make_df(
             "emission_factor",
-            node_loc= "N",
+            node_loc= "NE",
             year_vtg=history,
             year_act=model_horizon,
             mode="standard",
