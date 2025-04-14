@@ -510,6 +510,37 @@ def sankey(scenario,Reporter):
 
 
 def emissions(make_df, scenario, mp, history, model_horizon, local, technology):
+
+    ## Alterar
+    # Acho que vale a pena escrever essa seção no mesmo formato que a parte de custo de investimento... 
+    # Aí substitui os valores de custo fixo por fatores de emissão de toneladas de CO2 por kWa.
+    # Um exemplo é esse abaixo comentado
+
+    # Define the ssion factors for each technology (tCO2/kWa)
+    # emission = {
+    #     "oil_" + local + "_ppl": 7.4,
+    #     "biogas_" + local + "_ppl": 6,
+    #     "biomass_retrofit_" + local + "_ppl": 7,
+    #     "biomass_greenfield_" + local + "_ppl": 8,
+    #     "GN_open_cycle_" + local + "_ppl": 5,
+    #     "GN_combined_cycle_" + local + "_ppl": 6,
+    #     "national_coal_" + local + "_ppl": 9,
+    #     "imported_coal_" + local + "_ppl": 10,
+    # }
+
+    # # Add values to the parameter "inv_cost"
+    # for tec, val in emission.items():
+    #     df = make_df(
+    #         "inv_cost",
+    #         node_loc=local,
+    #         year_vtg=model_horizon,
+    #         unit="tCO2/kWa",
+    #         technology=tec,
+    #         value=val,
+    #     )
+    #     scenario.add_par("emission_factor", df)
+    # return scenario
+
     #Thermal technologies arrays
     tech_n = []
     tech_ne = []

@@ -67,15 +67,16 @@ scenario = chain_electricity.transmission_N_SE(make_df,scenario)
 scenario = chain_electricity.transmission_SE_N(make_df,scenario)
 
 # ======== Include Transmission of Natural Gas
-
+scenario = chain_gas.gas_transport_S_SE(make_df,scenario)
+scenario = chain_gas.gas_transport_SE_S(make_df,scenario)
 
 # ======== Include Emissions
-scenario = outputs.emissions(make_df,scenario, mp, history, model_horizon, local, technology)
+# scenario = outputs.emissions(make_df,scenario, mp, history, model_horizon, local, technology)
 
 
 # ======== Solve The Model
-scenario.commit(comment="Introducing emissions and setting an upper bound")
-scenario.set_as_default()
+# scenario.commit(comment="Introducing emissions and setting an upper bound")
+# scenario.set_as_default()
 scenario.solve()
 scenario.var("OBJ")["lvl"]
 
@@ -86,7 +87,7 @@ scenario.var("OBJ")["lvl"]
 #outputs.generate_excel(pd,scenario)
 #outputs.validation_table(pd, scenario, historic_demand_N, historic_demand_NE, historic_demand_S, historic_demand_SW, historic_act_N, historic_act_NE, historic_act_S, historic_act_SW, history, model_horizon)
 # outputs.plots(scenario, Reporter, prepare_plots, plt)
-# outputs.sankey(scenario,Reporter)
+outputs.sankey(scenario,Reporter)
 
 #tk.messagebox.showinfo("Notification", "The code has been successfully run!")
 

@@ -57,7 +57,7 @@ def definitions(pd,scenario):
     
     # Sets on the Natural Gas Sector
     scenario.add_set("commodity", ["gas_onland", "gas_undersea", "gnl_imported", "natural_gas", "gas_extracted"])
-    scenario.add_set("technology", ["GNL", "pipelines", "boiler", "GASBOL", "UPGN", "Gas_Offshore", "Gas_Onshore", "Gas_Reinjection"])
+    scenario.add_set("technology", ["GNL", "pipelines", "boiler", "GASBOL", "UPGN", "Gas_Offshore", "Gas_Onshore", "Gas_Reinjection", "gas_transport_S_SE/CW", "gas_transport_SE/CW_S"])
 
     # Add Fossil Resources
     scenario.add_set("level_resource", "resource")
@@ -72,7 +72,7 @@ def resource_gas_onshore(pd,scenario,local):
     gas_resource_N = 127.5
     gas_resource_NE = 153.7
     gas_resource_SE = 2.7
-    gas_resource_S = 90     #Valor ficticio, falta o BRABOL. Valor real é 2.8 MMm3/dia
+    gas_resource_S = 2.8     #Valor ficticio, falta o BRABOL. Valor real é 2.8 MMm3/dia
 
     # Check local node
     if local == 'N':
